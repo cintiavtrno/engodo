@@ -24,6 +24,7 @@
 
 <div class="ctl" id="ctl"></div>
 <div class="coro" id="coro" hidden><b id="coroQ"></b><span id="coroT"></span></div>
+<div class="selo" id="selo" hidden></div>
 <div class="aviso" id="aviso" hidden></div>
 <div class="tip" id="tip" hidden></div>
 <div class="dlg" id="dlg" hidden><b id="quem"></b><p id="txt"></p><div id="ops"></div><small id="dica">espaço ou clique para continuar</small></div>
@@ -83,7 +84,8 @@
 <section class="tela noite" id="tTut" hidden>
   <span class="sobre" id="tutN"></span>
   <h2 id="tutT"></h2>
-  <div class="cols duas">
+  <div class="cols">
+    <div><h3 id="tutQh"></h3><p id="tutQ"></p></div>
     <div><h3>Objetivo</h3><p id="tutO"></p></div>
     <div><h3>Como jogar</h3><p id="tutJ"></p></div>
   </div>
@@ -92,6 +94,15 @@
 
 <!-- vinheta: um respiro antes da cena -->
 <section class="tela noite vin" id="tVin" hidden><p id="vinT"></p><small>clique ou espaço para continuar</small></section>
+
+<!-- depois de cada escolha: o que mudou -->
+<section class="tela noite" id="tRes" hidden>
+  <span class="sobre">O que mudou</span>
+  <div class="selo fixo" id="resSelo"></div>
+  <p class="lead" id="resT"></p>
+  <p class="deltas" id="resN"></p>
+  <div class="itens"><button id="resOk">Voltar para a rua</button></div>
+</section>
 
 <div class="fim" id="fim" hidden><span class="sobre">Fim do dia</span><h2 id="fimT"></h2><p id="fimD"></p><div class="itens"><button id="fimB">Recomeçar o dia</button></div></div>
 

@@ -46,7 +46,7 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
          ['Seu Aurelino','Eu cuido dessa água desde que tua avó construiu a caixa. Todas as casas da rua bebem daqui.'],
          ['','Uma bomba foi ligada na parede. Ela puxa a água da rua por três mangueiras laranja.'],
          ['Seu Aurelino','Estão levando nossa água pra gerar energia pra outro bairro. Acerta a ponta das mangueiras com água pra soltar.']],
-      ()=>{F.st='jogo';F.gira=true;F.mang.forEach(m=>m.visible=true);F.juntas=F.pts.map(([x,y])=>inimigo('junta',x,y));});
+      ()=>{F.st='jogo';F.gira=true;F.mang.forEach(m=>m.visible=true);F.juntas=F.pts.map(([x,y])=>inimigo('junta',x,y));carimbo('RECURSO HÍDRICO REDIRECIONADO PARA GERAÇÃO DE ENERGIA',true);});
   },
   anim(tt,dt){
     const F=FS;F.t=tt;
@@ -77,18 +77,18 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
     F.st='decisao';
     const volta=()=>{F.st='calmo';};
     diz([['Seu Aurelino','A bomba desligou. E agora, o que a gente faz com a água que sobrou?',[
-      {t:'Pedir a ele para contar a história da caixa.',fn:()=>{
+      {t:'Pedir a ele para contar a história da caixa.',c:"Naná aprende a Lavar: limpar o que foi medido passa a gastar menos água.",fn:()=>{
         diz([['Seu Aurelino','Quem construiu esta caixa foi tua avó, Dete, pra rua não depender de ninguém. Você sabe onde ela está hoje?',[
           {t:'Ela morreu. Fui eu que paguei o enterro.',fn:()=>fim('campo','Seu Aurelino conta como Dete juntou os vizinhos e levantou a caixa em mutirão.')},
           {t:'Ela mora aqui dentro da caixa até hoje.',fn:()=>fim('caixa','No fundo da caixa, uma senhora varre o chão devagar. É Dete.')},
           {t:'Ela entrou na Fila em 1994 e nunca voltou.',fn:()=>fim('fila','Seu Aurelino conta que Dete acreditou na promessa da Fila. Foi embora para esperar a vez dela.')}
         ]]]);
-        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Tua avó me ensinou a lavar com pouca água. Vou te ensinar.'],['','Naná aprendeu a Lavar. A partir de agora ela gasta menos água para limpar o que foi medido.']]);}
+        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Tua avó me ensinou a lavar com pouca água. Vou te ensinar.'],['','Naná aprendeu a Lavar. A partir de agora ela gasta menos água para limpar o que foi medido.']],"Naná ficou sabendo de onde veio a caixa d'água da rua. Também aprendeu a Lavar. Daqui em diante, limpar o que foi medido gasta menos água.","MEMÓRIA NÃO CONSTA NO INVENTÁRIO");}
       }},
-      {t:'Pescar com ele.',fn:()=>{G.voz.add('aurelino');G.flags.horas=(G.flags.horas||0)+1;hud();resolve(4,[
-        ['','Naná passa uma hora na pescaria com Seu Aurelino. Os dois conversam sobre a rua.'],['Seu Aurelino','Gostei da conversa. Eu vou com você pra reunião na laje.']]);}},
-      {t:'Abrir o registro e mandar água para as casas.',fn:()=>{G.flags.registro=true;soma('agua',-150);resolve(4,[
-        ['','Naná abre o registro. Cento e cinquenta litros saem da caixa e chegam às torneiras dos vizinhos.'],['Seu Aurelino','Os vizinhos vão lembrar que foi você quem mandou a água.']]);}},
+      {t:'Pescar com ele.',c:"Seu Aurelino vai à reunião. O dia fica uma hora mais curto.",fn:()=>{G.voz.add('aurelino');G.flags.horas=(G.flags.horas||0)+1;hud();resolve(4,[
+        ['','Naná passa uma hora na pescaria com Seu Aurelino. Os dois conversam sobre a rua.'],['Seu Aurelino','Gostei da conversa. Eu vou com você pra reunião na laje.']],"A pescaria não deu peixe nenhum. Seu Aurelino gostou da companhia e vai à reunião. O dia ficou uma hora mais curto.","USO RECREATIVO DO RESERVATÓRIO");}},
+      {t:'Abrir o registro e mandar água para as casas.',c:"Custa 150 litros. Os vizinhos passam a confiar mais em Naná.",fn:()=>{G.flags.registro=true;soma('agua',-150);resolve(4,[
+        ['','Naná abre o registro. Cento e cinquenta litros saem da caixa e chegam às torneiras dos vizinhos.'],['Seu Aurelino','Os vizinhos vão lembrar que foi você quem mandou a água.']],"A água saiu da caixa e foi para as torneiras da rua. A caixa ficou 150 litros mais vazia. Os vizinhos sabem quem abriu o registro.","DISTRIBUIÇÃO SEM COBRANÇA · PREJUÍZO APURADO");}},
       {t:'Ainda não.',fn:volta}
     ]]]);
   }

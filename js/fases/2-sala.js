@@ -65,7 +65,7 @@ FASES[1]={x0:0,x1:10.8,H:3.9,inicio:.8,
   comeca(F){
     diz([['','A sala da casa virou uma loja. Todos os móveis estão com etiqueta de preço.'],
          ['Televisão','Naná, seu CPF foi pré-aprovado. Leve o kit cidadã em doze vezes.'],
-         ['Jéssica','Olha, Naná, meu nome apareceu na tela também. Nunca nenhuma loja me deu crédito.'],
+         ['Jéssica','Olha, Naná, meu nome na tela. O carteiro nem sobe nesta rua. Com um carnê no meu nome, eu passo a ter endereço.'],
          ['Naná','Eu não passei meu CPF pra ninguém. Como é que a televisão sabe?'],
          ['','Os Etiquetadores vão sair da televisão e pôr preço nas coisas da casa. Derrube com água e limpe o que eles marcarem.']],
       ()=>{F.st='jogo';F.onda=0;F.fila=2;F.tSolta=.5;});
@@ -105,12 +105,12 @@ FASES[1]={x0:0,x1:10.8,H:3.9,inicio:.8,
     F.st='decisao';
     diz([['','A televisão parou de soltar etiquetas. Agora ela espera uma resposta.'],
       ['Jéssica','E aí, Naná, assina comigo? Sozinha eles não aprovam meu cadastro.',[
-      {t:'Assinar o crediário junto com ela.',fn:()=>{G.voz.add('jessica');soma('medida',15);resolve(1,[
-        ['Jéssica','Assinado. Hoje à noite eu vou pra reunião na laje com você.'],['Televisão','Parabéns. Agora vocês têm uma dívida de doze meses.']]);}},
-      {t:'Desligar a televisão.',fn:()=>{F.tvOn=false;G.flags.radio=true;G.flags.zeConfia=true;G.flags.jessicaContra=true;hud();resolve(1,[
-        ['','A televisão apaga. O rádio de Seu Zé volta a funcionar no lugar da propaganda.'],['Jéssica','Você tirou a chance que eu tinha de comprar alguma coisa. Fiquei chateada.']]);}},
-      {t:'Chamar Jéssica para vender geladinho para o povo da Fila.',fn:()=>{G.voz.add('jessica');soma('agua',-100);resolve(1,[
-        ['Jéssica','Fechado. Você entra com cem litros de água e eu com o isopor.'],['Naná','Tem muita gente parada nessa fila. Dá pra ganhar um dinheiro sem ficar devendo.']]);}}
+      {t:'Assinar o crediário junto com ela.',c:"Jéssica vai à reunião. A Medida sobe 15, porque os móveis entram como garantia da dívida.",fn:()=>{G.voz.add('jessica');soma('medida',15);resolve(1,[
+        ['Jéssica','Assinado. Hoje à noite eu vou pra reunião na laje com você.'],['Televisão','Parabéns. Agora vocês têm uma dívida de doze meses.']],"Jéssica conseguiu o primeiro carnê da vida e vai com você à reunião. Os móveis da sala agora garantem a dívida. Se uma parcela atrasar, a loja pode levar tudo.","CIDADÃ APROVADA · 12 PARCELAS");}},
+      {t:'Desligar a televisão.',c:"A propaganda para e o rádio de Seu Zé volta. Jéssica fica chateada e não vai à reunião.",fn:()=>{F.tvOn=false;G.flags.radio=true;G.flags.zeConfia=true;G.flags.jessicaContra=true;hud();resolve(1,[
+        ['','A televisão apaga. O rádio de Seu Zé volta a funcionar no lugar da propaganda.'],['Jéssica','Você tirou a chance que eu tinha de comprar alguma coisa. Fiquei chateada.']],"A sala voltou a ser sala. Seu Zé recuperou um pedaço do rádio e passa a confiar em Naná. Jéssica ficou sem o carnê que queria e não vai à reunião.","SINAL INTERROMPIDO · CLIENTE PERDIDA");}},
+      {t:'Chamar Jéssica para vender geladinho para o povo da Fila.',c:"Custa 100 litros de água. Jéssica vai à reunião sem ficar devendo.",fn:()=>{G.voz.add('jessica');soma('agua',-100);resolve(1,[
+        ['Jéssica','Fechado. Você entra com cem litros de água e eu com o isopor.'],['Naná','Tem muita gente parada nessa fila. Dá pra ganhar um dinheiro sem ficar devendo.']],"As duas venderam geladinho para quem espera na Fila. A caixa perdeu 100 litros. Jéssica ganhou um dinheiro sem dívida e vai à reunião.","COMÉRCIO NÃO AUTORIZADO NA FILA");}}
     ]]]);
   }
 };

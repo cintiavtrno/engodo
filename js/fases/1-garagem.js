@@ -72,7 +72,7 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
     diz([['','Esta é a garagem da casa. Os medidores de água da rua inteira ficam nesta parede. Toda hora aparece mais um.'],
          ['Naná','O medidor da minha casa é o último, lá no alto. Hoje a empresa mandou eu medir o meu próprio consumo.'],
          ['','Cuidado com as Trenas que saem dos canos. Cada uma estica uma fita entre dois objetos. O que estiver no meio da fita ganha dono e preço. Para desfazer, jogue água.']],
-      ()=>{F.st='jogo';const a=inimigo('trena',.4,.4),b=inimigo('trena',12.0,.4);});
+      ()=>{F.st='jogo';const a=inimigo('trena',.4,.4),b=inimigo('trena',12.0,.4);carimbo('PROTOCOLO 01 · LEITURA DA PRÓPRIA CASA É OBRIGATÓRIA',true);});
   },
   anim(tt,dt){
     const F=FS;F.tt+=(fl||acabou)?0:dt;
@@ -95,12 +95,12 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
   decide(F){
     F.st='decisao';
     diz([['Coletor','Leitura da casa 0047. O que você vai registrar?',[
-      {t:'Registrar o consumo de verdade.',fn:()=>{soma('medida',15);G.flags.bico=true;resolve(0,[
-        ['Coletor','Leitura registrada. A conta desta casa vai subir. A empresa liberou um bico mais forte para a sua mangueira.'],['Naná','Fiz com a minha casa o que eu faço com a dos vizinhos todo dia.']]);}},
-      {t:'Registrar zero, como se a casa não gastasse água.',fn:()=>{G.flags.fraude=true;resolve(0,[
-        ['Coletor','Consumo zero. Leitura aceita.'],['Naná','Hoje ninguém percebe. Amanhã a empresa pode descobrir.']]);}},
-      {t:'Quebrar o medidor.',fn:()=>{soma('medida',-10);G.flags.prancheta=true;F.relogio.visible=false;resolve(0,[
-        ['','O medidor quebra. A casa fica menos medida, mas a empresa manda um fiscal atrás de Naná.'],['Naná','Agora um fiscal vai me seguir o resto do dia.']]);}}
+      {t:'Registrar o consumo de verdade.',c:"A conta da casa sobe e a Medida aumenta 15. A empresa recompensa Naná com um bico mais forte na mangueira.",fn:()=>{soma('medida',15);G.flags.bico=true;resolve(0,[
+        ['Coletor','Leitura registrada. A conta desta casa vai subir. A empresa liberou um bico mais forte para a sua mangueira.'],['Naná','Fiz com a minha casa o que eu faço com a dos vizinhos todo dia.']],"Naná fez o que a empresa mandou. A casa dela ficou mais medida, porque o consumo real entrou no cadastro. Em troca, a mangueira alcança mais longe nas próximas fases.","LEITURA CONFORME · FUNCIONÁRIA EXEMPLAR");}},
+      {t:'Registrar zero, como se a casa não gastasse água.',c:"Nada muda hoje. A fraude fica anotada e pode aparecer mais tarde.",fn:()=>{G.flags.fraude=true;resolve(0,[
+        ['Coletor','Consumo zero. Leitura aceita.'],['Naná','Hoje ninguém percebe. Amanhã a empresa pode descobrir.']],"A casa não foi medida hoje. A empresa ainda não notou o zero no sistema. Se notar, Naná pode perder o emprego.","CONSUMO ZERO · IMÓVEL SUSPEITO DE EFICIÊNCIA");}},
+      {t:'Quebrar o medidor.',c:"A Medida cai 10. Um fiscal passa a seguir Naná.",fn:()=>{soma('medida',-10);G.flags.prancheta=true;F.relogio.visible=false;resolve(0,[
+        ['','O medidor quebra. A casa fica menos medida, mas a empresa manda um fiscal atrás de Naná.'],['Naná','Agora um fiscal vai me seguir o resto do dia.']],"Sem medidor, a empresa não consegue cobrar esta casa por enquanto. Naná ganhou tempo e arrumou um fiscal no encalço.","EQUIPAMENTO DANIFICADO · ABERTA SINDICÂNCIA");}}
     ]]]);
   }
 };

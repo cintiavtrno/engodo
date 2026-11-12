@@ -6,7 +6,7 @@ window.__f={get FS(){return FS;},PJ,G,fk,get fl(){return fl;}};
 const clock=new T.Clock();
 let level=.12;
 renderer.setAnimationLoop(()=>{
-  if(document.body.dataset.modo!==mode)document.body.dataset.modo=mode;
+  if(document.body.dataset.modo!==mode){document.body.dataset.modo=mode;hud();}
   const now=performance.now(),tt=clock.getElapsedTime();
   for(const tw of tweens.slice()){
     const k=Math.min(1,(now-tw.t0)/tw.dur);tw.fn(k);

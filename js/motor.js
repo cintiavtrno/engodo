@@ -41,7 +41,9 @@ function flAvanca(){
 }
 function flEscolhe(k){
   if(!fl||!fl.ops||!fl.posto||!fl.ops[k]||fl.ops[k].off)return;
-  const o=fl.ops[k];fl=null;elDlg.hidden=true;elOps.innerHTML='';elDica.hidden=false;o.fn();
+  const o=fl.ops[k];fl=null;elDlg.hidden=true;elOps.innerHTML='';elDica.hidden=false;
+  if(FS)FS.antes={agua:G.agua,medida:G.medida,voz:new Set(G.voz)};   // para mostrar depois o que a escolha mudou
+  o.fn();
 }
 function flTick(){
   if(!fl)return;
@@ -51,6 +53,7 @@ function flTick(){
     fl.posto=true;
     fl.ops.forEach((o,k)=>{
       const b=document.createElement('button');b.textContent=(k+1)+'. '+o.t+(o.off?' ('+o.off+')':'');if(o.off)b.className='off';
+      if(o.c){const sm=document.createElement('small');sm.textContent=o.c;b.appendChild(sm);}
       b.addEventListener('click',e=>{e.stopPropagation();flEscolhe(k);});elOps.appendChild(b);
     });
   }
@@ -112,13 +115,21 @@ const fk=new Set();let pulo=false,tiro=false,mouseN=null,usouE=false;
 function prop(ms,x0,x1,y0,y1){
   const p={ms:[].concat(ms),x0,x1,y0,y1,med:false,lav:0};p.orig=p.ms.map(m=>m.material);FS.props.push(p);return p;
 }
-function mede(p){if(p.med)return;p.med=true;p.lav=0;p.ms.forEach(m=>m.material=M.planta);soma('medida',2);}
+function mede(p){if(p.med)return;p.med=true;p.lav=0;p.ms.forEach(m=>m.material=M.planta);soma('medida',2);carimbo(FS.selo);}
+/* carimbo: a versão oficial da Fila para o que acabou de acontecer */
+let seloT=0;
+function carimbo(t,forca){
+  const agora=performance.now();if(!t||(!forca&&agora-seloT<7000))return;seloT=agora;
+  const el=$('selo');el.textContent=t;el.hidden=false;el.classList.remove('bate');void el.offsetWidth;el.classList.add('bate');
+  clearTimeout(carimbo.h);carimbo.h=setTimeout(()=>{el.hidden=true;},3800);
+}
 function lava(p){if(!p.med)return;p.med=false;p.ms.forEach((m,i)=>m.material=p.orig[i]);soma('medida',-2);}
 function etiquetaCorpo(sx){
   if(PJ.inv>0||PJ.esc)return;
   G.corpo++;PJ.inv=1.3;PJ.vx=sx*4.2;PJ.vy=3;
   if(G.corpo>=3){
     G.corpo=0;soma('medida',10);PJ.x=FS.inicio;PJ.y=0;PJ.vx=PJ.vy=0;PJ.inv=2.5;
+    carimbo('MORADORA CADASTRADA COM SUCESSO',true);
     recado('Naná levou três etiquetas e foi cadastrada. Ela volta para a entrada e a Medida sobe 10.',3.5);
   }
   hud();
@@ -377,7 +388,7 @@ function abreFase(i){
   const d=FASES[i];
   FS={i,x0:d.x0,x1:d.x1,H:d.H,inicio:d.inicio,props:[],plat:[{x0:d.x0,x1:d.x1,y:0}],ini:[],tags:[],figs:[],mortos:0,st:'intro',recadoT:0,cx:d.inicio,cy:d.H/2,feita:G.feitas.has(i)};
   d.monta(FS);
-  chaoInfinito(roomScene);FS.coro=COROS[i]||null;FS.ct=0;FS.ck=-1;
+  chaoInfinito(roomScene);FS.selo=SELOS[i]||null;FS.coro=COROS[i]||null;FS.ct=0;FS.ck=-1;
   if(d.tick)FS.tick=d.tick.bind(d);
   if(d.anim)FS.anim=d.anim.bind(d);
   FS.plat.sort((a,b)=>b.y-a.y);
@@ -399,12 +410,12 @@ function fechaFase(){
   ELENCO.forEach(a=>{if(a.fora){a.fora=false;scene.add(a.f.root);a.f.root.visible=true;}});
   nana.bico.visible=false;
   fl=null;elDlg.hidden=true;elOps.innerHTML='';elDica.hidden=false;elAviso.hidden=true;
-  clearRoom();FS=null;gotasIM=null;$('coro').hidden=true;
+  clearRoom();FS=null;gotasIM=null;$('coro').hidden=true;$('selo').hidden=true;
   elHint.textContent=HINT_CASA;resize();hud();
 }
-function resolve(i,linhas){
-  G.feitas.add(i);FS.st='fim';FS.ini.forEach(some);
-  FS.st='fala';diz(linhas,()=>{FS.st='fim';leave();});
+function resolve(i,linhas,depois,selo){
+  G.feitas.add(i);FS.ini.forEach(some);
+  FS.st='fala';diz(linhas,()=>{FS.st='fim';$('selo').hidden=true;resultado(depois,selo,FS.antes,()=>leave());});
 }
 /* bico da mangueira na mão livre de Naná (só aparece nas fases) */
 (function(){

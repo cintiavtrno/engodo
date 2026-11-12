@@ -56,15 +56,15 @@ FASES[5]={x0:0,x1:11.2,H:4.8,inicio:.8,
     F.st='decisao';
     const limpos=F.potes.filter(p=>!p.med).length;
     diz([['Tia Cotinha','A empresa diz que melhorou a semente em um por cento. Por isso, quer ser dona dela inteira. O que a gente faz com as que sobraram?',[
-      {t:'Dividir as sementes e plantar nos potes dos vizinhos.',off:limpos?null:'os três potes foram carimbados; limpe pelo menos um',fn:()=>{G.voz.add('cotinha');G.flags.sementesRua=true;soma('agua',-40);resolve(5,[
+      {t:'Dividir as sementes e plantar nos potes dos vizinhos.',c:"Tia Cotinha vai à reunião. A rega de tantos potes custa 40 litros agora e mais água até o fim do dia.",off:limpos?null:'os três potes foram carimbados; limpe pelo menos um',fn:()=>{G.voz.add('cotinha');G.flags.sementesRua=true;soma('agua',-40);resolve(5,[
         ['','Cotinha separa as sementes em saquinhos. Cada vizinho planta um pouco em casa. A rega de tantos potes gasta água da caixa até o fim do dia.'],
-        ['Tia Cotinha','Com semente em toda casa, fica difícil registrar tudo. Eu vou pra reunião.']]);}},
-      {t:'Esconder as sementes.',fn:()=>{G.voz.add('cotinha');G.flags.cotinhaCalada=true;hud();resolve(5,[
+        ['Tia Cotinha','Com semente em toda casa, fica difícil registrar tudo. Eu vou pra reunião.']],"Cada casa da rua tem um punhado do feijão. Fica difícil alguém registrar tudo. A rega gasta água da caixa. Tia Cotinha vai à reunião.","CULTIVO DISPERSO · REGISTRO INVIÁVEL");}},
+      {t:'Esconder as sementes.',c:"As sementes ficam salvas. Tia Cotinha vai à reunião e não fala delas.",fn:()=>{G.voz.add('cotinha');G.flags.cotinhaCalada=true;hud();resolve(5,[
         ['','Naná e Cotinha guardam as sementes num lugar que só as duas conhecem. Ficam seguras. Este ano, ninguém planta.'],
-        ['Tia Cotinha','Eu vou pra reunião. Das sementes eu não falo com ninguém.']]);}},
-      {t:'Deixar a empresa registrar um dos potes.',fn:()=>{G.flags.cesta=true;G.flags.cotinhaDesce=true;resolve(5,[
+        ['Tia Cotinha','Eu vou pra reunião. Das sementes eu não falo com ninguém.']],"As sementes estão guardadas e ninguém planta este ano. Tia Cotinha vai à reunião e fica calada sobre o assunto.","MATERIAL NÃO LOCALIZADO");}},
+      {t:'Deixar a empresa registrar um dos potes.',c:"A rua recebe cesta básica. Tia Cotinha não vai à reunião.",fn:()=>{G.flags.cesta=true;G.flags.cotinhaDesce=true;resolve(5,[
         ['','A empresa registra um pote no nome dela. Em troca, manda uma cesta básica para cada casa da rua.'],
-        ['Tia Cotinha','Essa semente era da minha mãe. Agora tem outro dono. Não me chame pra reunião.']]);}},
+        ['Tia Cotinha','Essa semente era da minha mãe. Agora tem outro dono. Não me chame pra reunião.']],"Um dos potes agora pertence à empresa. Para plantar esse feijão, Tia Cotinha vai precisar de licença. A rua recebeu cesta básica. Ela não vai à reunião.","VARIEDADE REGISTRADA · PARABÉNS PELA PARCERIA");}},
       {t:'Ainda não.',fn:()=>{F.st='calmo';}}
     ]]]);
   }

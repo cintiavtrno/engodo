@@ -47,7 +47,7 @@ FASES[2]={x0:0,x1:13.2,H:4.8,inicio:.9,
       const g=new T.Group();roomScene.add(g);
       const b=new T.Mesh(new T.CylinderGeometry(.2,.15,.3,10,1,true),balde);b.position.y=.15;b.castShadow=true;g.add(b);
       const f=new T.Mesh(new T.CylinderGeometry(.15,.15,.012,10),balde);f.position.y=.006;g.add(f);
-      const a=new T.Mesh(new T.CylinderGeometry(.185,.185,.006,10),new T.MeshStandardMaterial({color:corLin(0x7fa9cc),roughness:.25,flatShading:true}));a.position.y=.26;g.add(a);
+      /* os baldes da esteira andam vazios */
       const p={x0:0,x1:0,y:EY+.3,vx:-F.vEst};F.plat.push(p);F.baldes.push({x:E0+.6+k*(E1-E0)/5,g,p});
     }
     /* andaimes de carga: plataformas fixas por cima da esteira, antes de cada catraca */
@@ -90,7 +90,7 @@ FASES[2]={x0:0,x1:13.2,H:4.8,inicio:.9,
   },
   comeca(F){
     diz([['','O quintal virou uma fábrica. A esteira carrega os baldes e empurra para trás quem pisa nela.'],
-         ['Binho','Consegui emprego aqui, Naná. Meu serviço é virar balde o dia todo, sempre o mesmo movimento.'],
+         ['Binho','Consegui emprego aqui, Naná. Meu serviço é passar a água de um balde pro outro. Chega vazio no fim, que o balde é furado. O relógio conta do mesmo jeito.'],
          ['','Para chegar até Binho, passe pelas catracas. Elas abrem quando o relógio de ponto bate. Você também pode pular por cima ou derrubar com água pelo lado de trás.']],
       ()=>{F.st='jogo';});
   },
@@ -130,12 +130,12 @@ FASES[2]={x0:0,x1:13.2,H:4.8,inicio:.9,
     F.st='decisao';
     const presas=F.cats.filter(c=>c.hp>0&&c.morre<=0).length;
     diz([['Binho','Naná, meu braço já está doendo. Mas se eu sair antes da hora, não recebo o dia.',[
-      {t:'Tirar Binho da linha.',off:presas?'as catracas não deixam ele sair; derrube todas por trás':null,fn:()=>{G.voz.add('binho');G.flags.binhoSemDia=true;hud();resolve(2,[
-        ['Binho','Saí. Perdi o pagamento de hoje. Disso eu vou falar na reunião.'],['','O braço de Binho ainda repete o movimento sozinho por um tempo.']]);}},
-      {t:'Trabalhar um turno ao lado dele.',fn:()=>{G.flags.turno=true;soma('agua',200);resolve(2,[
-        ['','Naná trabalha um turno na esteira. Recebe duzentos litros de água como pagamento e perde uma hora do dia.'],['Binho','Com esse emprego dá pra pagar as contas. O ruim é que não sobra tempo nem força pra mais nada.']]);}},
-      {t:'Travar a esteira.',fn:()=>{G.flags.esteiraTravada=true;F.vEst=0;resolve(2,[
-        ['','Naná trava a engrenagem e a esteira para.'],['Binho','Amanhã eles consertam.'],['Naná','Pelo menos hoje ninguém se machuca nela.']]);}},
+      {t:'Tirar Binho da linha.',c:"Binho vai à reunião. Ele perde o pagamento do dia.",off:presas?'as catracas não deixam ele sair; derrube todas por trás':null,fn:()=>{G.voz.add('binho');G.flags.binhoSemDia=true;hud();resolve(2,[
+        ['Binho','Saí. Perdi o pagamento de hoje. Disso eu vou falar na reunião.'],['','O braço de Binho ainda repete o movimento sozinho por um tempo.']],"Binho saiu da esteira e vai à reunião. Ficou sem o dia de salário e talvez sem a vaga. Ele vai falar disso na frente de todo mundo.","ABANDONO DE POSTO · VAGA DISPONÍVEL");}},
+      {t:'Trabalhar um turno ao lado dele.',c:"A caixa ganha 200 litros. O dia fica uma hora mais curto e Binho continua na esteira.",fn:()=>{G.flags.turno=true;soma('agua',200);resolve(2,[
+        ['','Naná trabalha um turno na esteira. Recebe duzentos litros de água como pagamento e perde uma hora do dia.'],['Binho','Com esse emprego dá pra pagar as contas. O ruim é que não sobra tempo nem força pra mais nada.']],"O turno rendeu 200 litros para a caixa da rua. Binho continua na esteira e não vai à reunião. O dia de Naná ficou uma hora mais curto.","PRODUTIVIDADE DENTRO DA META");}},
+      {t:'Travar a esteira.',c:"Ninguém se machuca hoje. Binho fica sem turno e não vai à reunião.",fn:()=>{G.flags.esteiraTravada=true;F.vEst=0;resolve(2,[
+        ['','Naná trava a engrenagem e a esteira para.'],['Binho','Amanhã eles consertam.'],['Naná','Pelo menos hoje ninguém se machuca nela.']],"A esteira parou por hoje. Binho ficou sem turno, sem salário e sem motivo para ir à reunião. Amanhã ela volta a rodar.","FALHA MECÂNICA · TURNO SERÁ REPOSTO NO DOMINGO");}},
       {t:'Ainda não. Voltar para a esteira.',fn:()=>{F.st='jogo';}}
     ]]]);
   }

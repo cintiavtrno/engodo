@@ -3,8 +3,8 @@
    ================================================================ */
 const tTitulo=$('tTitulo'),tMenu=$('tMenu'),tTut=$('tTut'),tComo=$('tComo');
 let comoVolta=null;
-const tVin=$('tVin');
-function telaAberta(){return !tTitulo.hidden||!tMenu.hidden||!tTut.hidden||!tComo.hidden||!tVin.hidden;}
+const tVin=$('tVin'),tRes=$('tRes');
+function telaAberta(){return !tTitulo.hidden||!tMenu.hidden||!tTut.hidden||!tComo.hidden||!tVin.hidden||!tRes.hidden;}
 function atualizaPausa(){
   pausa=telaAberta();teclas.clear();fk.clear();tiro=false;
   document.body.classList.toggle('pausado',pausa);document.body.classList.toggle('abertura',!tTitulo.hidden||(!tComo.hidden&&comoVolta===tTitulo));
@@ -36,25 +36,31 @@ window.addEventListener('keydown',e=>{
 
 /* tutorial: objetivo, como jogar e a pergunta da fase */
 const TUT=[
- {o:'Suba até o medidor de água da casa, no cano mais alto, para fazer a leitura. Pelo caminho, não deixe as Trenas medirem as coisas da garagem.',
+ {n:"Naná",q:"Naná tem 30 anos e mora na casa que a avó construiu. Arrumou emprego na companhia de água. O serviço dela é anotar quanto cada vizinho gasta. Desse número sai a conta de cada casa. Ela precisa do salário. No fim do expediente, toma café com as mesmas pessoas que vão receber a cobrança.",
+  o:'Suba até o medidor de água da casa, no cano mais alto, para fazer a leitura. Pelo caminho, não deixe as Trenas medirem as coisas da garagem.',
   j:'Os canos e o carro coberto servem de degrau. Cada Trena estica uma fita entre dois objetos. O que fica no meio vira desenho branco. A água desfaz a Trena e limpa o que ela marcou. Quando chegar ao medidor, segure a tecla E.'},
- {o:'Aguente três ataques dos Etiquetadores. Eles querem pôr preço em tudo o que há na sala. Depois do terceiro ataque, responda ao pedido de Jéssica.',
+ {n:"Jéssica",q:"Jéssica tem 25 anos e vende geladinho na rua desde menina. Nunca teve cartão, conta em banco nem carta entregue em casa. Quer comprar a prazo porque, por aqui, loja só chama pelo nome quem tem carnê. Ela sabe que a dívida vai pesar e não pretende desistir por isso.",
+  o:'Aguente três ataques dos Etiquetadores. Eles querem pôr preço em tudo o que há na sala. Depois do terceiro ataque, responda ao pedido de Jéssica.',
   j:'Dá para subir no sofá, na mesa e na estante. Acerte os Etiquetadores com água no ar. Móvel marcado fica branco até você limpar. Se três etiquetas caírem em Naná, ela volta para a entrada. Nesse caso, a Medida sobe.'},
- {o:'Atravesse a esteira até o lugar onde Binho trabalha. Lá, vocês dois decidem o que fazer.',
+ {n:"Binho",q:"Binho tem 22 anos. Fazia entrega de moto até a moto quebrar. O emprego na esteira é o primeiro com carteira assinada da vida dele. A mãe contou a novidade para a rua inteira. O braço dói desde o primeiro dia. Ele não quer ser o filho que largou o emprego.",
+  o:'Atravesse a esteira até o lugar onde Binho trabalha. Lá, vocês dois decidem o que fazer.',
   j:'A esteira empurra para trás quem fica parado. Três catracas fecham a passagem. Elas abrem por um instante quando o relógio de ponto bate. Fora dessa hora, pule por cima a partir das plataformas de madeira. Também dá para derrubar a catraca com água pelo lado de trás. Os cartões vêm rente ao chão. Pule.'},
- {o:'Suba a escadaria de mármore até Dona Marlene, no último degrau. Lá de cima dá para ver onde a escada termina.',
+ {n:"Dona Marlene",q:"Dona Marlene tem 60 anos e mora no alto da ladeira. Sobe com balde d'água todo dia desde que chegou à rua. Pediu escada à prefeitura muitas vezes. Agora a obra veio. Ela defende cada degrau e tem medo de reclamar de qualquer coisa e ficar sem nada.",
+  o:'Suba a escadaria de mármore até Dona Marlene, no último degrau. Lá de cima dá para ver onde a escada termina.',
   j:'Para subir, basta andar. De tempos em tempos, um rolo compressor desce a escada. Segure E em frente a uma porta para se esconder, ou pule por cima dele. Os cones perseguem Naná até levarem água. Casa por onde o rolo passa vira desenho branco. Você pode limpar.'},
- {o:'Solte as três mangueiras da bomba antes que a água acabe. Depois, converse com Seu Aurelino.',
+ {n:"Seu Aurelino",q:"Seu Aurelino tem 75 anos e foi pescador. Veio para a cidade quando o rio da terra dele virou represa. Ajudou a levantar a caixa d'água da rua e nunca mais saiu de perto dela. Desconfia de qualquer cano novo.",
+  o:'Solte as três mangueiras da bomba antes que a água acabe. Depois, converse com Seu Aurelino.',
   j:'A altura da água aqui dentro é o seu marcador Água. Com a bomba ligada, ele desce sem parar. Você pode nadar, subir nas plataformas de madeira e na canoa. Mire na ponta laranja de cada mangueira. Fique longe das turbinas do fundo. Quem encosta nelas leva etiqueta.'},
- {o:'Proteja os três potes de feijão de Tia Cotinha até os Carimbadores pararem de descer. Depois, decida com ela o destino das sementes.',
+ {n:"Tia Cotinha",q:"Tia Cotinha tem 70 anos e planta na laje o feijão que a mãe trouxe do interior. Dá semente para quem pede. Nunca vendeu nem assinou papel nenhum por causa disso. Agora tem medo de dividir com os vizinhos e de alguém registrar no próprio nome.",
+  o:'Proteja os três potes de feijão de Tia Cotinha até os Carimbadores pararem de descer. Depois, decida com ela o destino das sementes.',
   j:'Os Carimbadores descem do alto em direção aos potes. Acerte com água antes que encostem. Pote carimbado fica branco até você limpar. A pilha de tijolos e o caixote ajudam a alcançar os que vêm mais alto.'}
 ];
 let tutFn=null;
 function tutorial(i,fn){
   const t=TUT[i];if(!t){fn();return;}
   $('tutN').textContent='Fase '+(i+1);$('tutT').textContent=OPS[i].t;
-  $('tutO').textContent=t.o;$('tutJ').textContent=t.j;
-  tutFn=fn;tTut.hidden=false;atualizaPausa();$('tutOk').focus();
+  $('tutQh').textContent='Quem é '+t.n;$('tutQ').textContent=t.q;$('tutO').textContent=t.o;$('tutJ').textContent=t.j;
+  tutFn=fn;tTut.hidden=false;atualizaPausa();
 }
 $('tutOk').addEventListener('click',()=>{tTut.hidden=true;atualizaPausa();const f=tutFn;tutFn=null;f&&f();});
 
@@ -110,3 +116,25 @@ const COROS=[
   ['Tia Cotinha','Todo ano eu guardo um punhado pra plantar de novo.'],['Tia Cotinha','O moço da prancheta pôs um número no pote ontem.'],
   ['Tia Cotinha','Disse que eu preciso de licença pra plantar o que é meu.']]
 ];
+
+/* carimbo que aparece quando algo é medido em cada fase */
+const SELOS=['BEM DOMÉSTICO INCLUÍDO NO CADASTRO','MÓVEL CONVERTIDO EM GARANTIA DE CRÉDITO','ITEM DO QUINTAL INCORPORADO À LINHA',
+  'OBSTÁCULO RESIDENCIAL NIVELADO',null,'VARIEDADE REGISTRADA · USO SUJEITO A LICENÇA'];
+
+/* depois de cada escolha: a versão oficial, o que aconteceu de fato e o que mudou nos marcadores */
+let resFn=null;
+function resultado(texto,selo,antes,fn){
+  if(!texto){fn&&fn();return;}
+  $('resSelo').textContent=selo||'';$('resSelo').hidden=!selo;$('resT').textContent=texto;
+  const d=[];
+  if(antes){
+    const a=Math.round(G.agua-antes.agua),m=Math.round(G.medida-antes.medida);
+    if(a)d.push('Água '+(a>0?'+':'−')+Math.abs(a)+' L');
+    if(m)d.push('Medida '+(m>0?'+':'−')+Math.abs(m));
+    const novos=[...G.voz].filter(v=>!antes.voz.has(v)).map(v=>porId(v).nome);
+    if(novos.length)d.push('Voz +'+novos.length+' ('+novos.join(', ')+')');
+  }
+  $('resN').textContent=d.length?d.join('  ·  '):'Os marcadores não mudaram.';
+  resFn=fn||null;tRes.hidden=false;atualizaPausa();   // sem foco no botão: quem está apertando espaço não pula a tela sem ler
+}
+$('resOk').addEventListener('click',()=>{tRes.hidden=true;atualizaPausa();const f=resFn;resFn=null;f&&f();});
