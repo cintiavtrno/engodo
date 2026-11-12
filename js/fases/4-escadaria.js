@@ -39,9 +39,9 @@ FASES[3]={x0:0,x1:13.6,H:7.8,inicio:.6,
     F.tRolo=6;F.tCone=3;F.px=F.inicio;F.pz=0;
   },
   comeca(F){
-    diz([['','As máquinas da Fila estão concretando a escadaria da rua. Um risco laranja no chão mostra por onde ela vai passar.'],
-         ['Dona Marlene','Sobe, Naná! Vem ver. Trinta anos de balde e agora tem degrau.'],
-         ['','O risco atravessa a casa 12 e a casa 14.']],()=>{F.st='jogo';});
+    diz([['','Uma empresa está construindo uma escadaria de concreto na rua. A faixa laranja mostra por onde a obra vai passar.'],
+         ['Dona Marlene','Sobe aqui, Naná! Faz trinta anos que eu carrego balde nessa ladeira. Agora vai ter escada.'],
+         ['','A faixa laranja passa por dentro das casas 12 e 14. Se a obra continuar assim, as duas serão derrubadas.']],()=>{F.st='jogo';});
   },
   anim(tt){FS.bet.rotation.y=tt*2;},
   tick(dt){
@@ -58,21 +58,21 @@ FASES[3]={x0:0,x1:13.6,H:7.8,inicio:.6,
     if(F.st!=='jogo'){F.dica=null;return;}
     F.tRolo-=dt;F.tCone-=dt;
     const vivos=F.ini.filter(e=>e.morre<=0);
-    if(F.tRolo<=0){F.tRolo=9;inimigo('rolo',12.3,F.topo);recado('O rolo vem descendo. Segure E num vão de porta ou pule por cima.',2.6);}
+    if(F.tRolo<=0){F.tRolo=9;inimigo('rolo',12.3,F.topo);recado('O rolo compressor vem descendo. Segure E em frente a uma porta para se esconder, ou pule por cima.',2.8);}
     if(F.tCone<=0&&vivos.filter(e=>e.tipo==='cone').length<3){F.tCone=6;inimigo('cone',11.9,F.topo);}
     if(noAlto){F.dica='E · falar com Dona Marlene';if(usouE)this.decide(F);}
-    else F.dica=vao?'Segure E para entrar no vão da porta':null;
+    else F.dica=vao?'Segure E para se esconder na porta':null;
   },
   decide(F){
     F.st='decisao';
-    diz([['Dona Marlene','Tá vendo? Agora vem. Só que o risco passa por dentro da 12 e da 14, e o moço diz que é o traçado mais adequado.',[
-      {t:'Negociar o trajeto com a rua.',off:G.voz.size<1?'ninguém está com você ainda; precisa de Voz 1':null,fn:()=>{G.flags.acordo=true;G.voz.add('marlene');hud();resolve(3,[
-        ['','Quem veio com Naná para na frente da máquina. O risco é apagado com o pé e refeito mais à esquerda, entre os muros.'],
-        ['Dona Marlene','Escada por onde a rua quis. Eu subo pra laje pra garantir.']]);}},
-      {t:'Bloquear a obra.',fn:()=>{G.flags.marleneDesce=true;soma('medida',-10);resolve(3,[
-        ['','Naná fecha o registro da betoneira. O concreto endurece no tambor.'],['Dona Marlene','Então tu me deve trinta anos de balde. Na laje eu não piso.']]);}},
-      {t:'Deixar passar.',fn:()=>{G.voz.add('marlene');F.casas.forEach(p=>{if(!p.med){p.med=true;p.ms.forEach(m=>m.material=M.planta);}});soma('medida',25);resolve(3,[
-        ['','O rolo desce uma última vez. A 12 e a 14 ficam no chão, desenhadas em escala.'],['Dona Marlene','Vai ter escada. Eu queria que fosse de outro jeito, mas vai ter.']]);}},
+    diz([['Dona Marlene','Eu quero muito essa escada. Mas o engenheiro desenhou o caminho por cima da casa dos vizinhos e não perguntou nada a ninguém.',[
+      {t:'Juntar os vizinhos e exigir outro caminho para a escada.',off:G.voz.size<1?'você ainda não tem nenhum vizinho do seu lado':null,fn:()=>{G.flags.acordo=true;G.voz.add('marlene');hud();resolve(3,[
+        ['','Os vizinhos param na frente da máquina. A empresa aceita desviar a escada para o espaço entre os muros. As casas 12 e 14 continuam de pé.'],
+        ['Dona Marlene','Vai ter escada e ninguém perde a casa. Eu vou pra reunião na laje.']]);}},
+      {t:'Parar a obra.',fn:()=>{G.flags.marleneDesce=true;soma('medida',-10);resolve(3,[
+        ['','Naná desliga a betoneira. A obra para e as casas continuam de pé.'],['Dona Marlene','E eu continuo carregando balde na ladeira. Não conte comigo na reunião.']]);}},
+      {t:'Deixar a obra seguir como está.',fn:()=>{G.voz.add('marlene');F.casas.forEach(p=>{if(!p.med){p.med=true;p.ms.forEach(m=>m.material=M.planta);}});soma('medida',25);resolve(3,[
+        ['','A escada fica pronta. As casas 12 e 14 são derrubadas e duas famílias precisam sair da rua.'],['Dona Marlene','A escada saiu. Eu queria que tivesse sido sem derrubar a casa de ninguém.']]);}},
       {t:'Ainda não. Descer de volta.',fn:()=>{F.st='jogo';}}
     ]]]);
   }

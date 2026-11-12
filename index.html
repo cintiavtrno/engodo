@@ -34,10 +34,11 @@
 
 <!-- abertura -->
 <section class="tela" id="tTitulo">
-  <span class="sobre">Um dia na rua · 15 minutos</span>
+  <span class="sobre">Um jogo de 15 minutos</span>
   <h1 class="titulo">Engodo<i></i></h1>
-  <p class="lead">Naná mede a água dos outros para viver. Nesta manhã chegou um aviso: a rua dela foi incluída na Fila do desenvolvimento. A Fila atravessa as casas, não anda e ninguém viu a frente.</p>
-  <p class="lead">Seu objetivo é chegar ao fim do dia com a casa ainda sendo casa, água na caixa e gente ao lado para decidir o que fazer com ela.</p>
+  <p class="lead">Engodo quer dizer isca. Neste jogo, a isca é a promessa de desenvolvimento: um funcionário avisa que a rua vai receber obra, emprego e crédito se os moradores entrarem numa fila e esperarem a vez. A fila não anda.</p>
+  <p class="lead">Você joga com Naná, moradora da rua, que trabalha medindo o consumo de água das casas. Para ganhar o dia, ela precisa manter água na caixa da rua, impedir que a casa seja toda medida e juntar vizinhos para a reunião da noite.</p>
+  <p class="lead">As cenas estranhas, como a fila que atravessa parede e os móveis que viram desenho, mostram de um jeito exagerado coisas que acontecem de verdade em bairros populares.</p>
   <div class="itens">
     <button id="bComecar">Começar o dia</button>
     <button id="bComo" class="menor">Como jogar</button>
@@ -48,16 +49,16 @@
 <!-- como jogar -->
 <section class="tela noite" id="tComo" hidden>
   <span class="sobre">Como jogar</span>
-  <h2>Três números contam o dia</h2>
+  <h2>Os três marcadores</h2>
   <div class="cols">
-    <div><h3>Água</h3><p>É o que a rua bebe e é a sua munição. Cada jato da mangueira sai da caixa. Se chegar a zero, a caixa é ligada à rede.</p></div>
-    <div><h3>Medida</h3><p>Tudo o que os Medidores etiquetam vira planta baixa. A água lava. Se a casa chegar a cem por cento medida, deixa de ser casa.</p></div>
-    <div><h3>Voz</h3><p>É quem sobe com você para a laje no fim do dia. Depende de como você resolve a questão de cada vizinho.</p></div>
+    <div><h3>Água</h3><p>É a água da caixa que abastece a rua. Você também usa essa água na mangueira para se defender. Se ela acabar, a rua passa a depender da empresa e você perde.</p></div>
+    <div><h3>Medida</h3><p>Os inimigos colam etiquetas nas coisas da casa. O que recebe etiqueta vira desenho branco e passa a ter dono e preço. Jogar água limpa. Se a Medida chegar a 100%, você perde a casa.</p></div>
+    <div><h3>Voz</h3><p>É o número de vizinhos que vão com você para a reunião na laje no fim do dia. Cada vizinho decide ir ou não conforme a escolha que você faz na fase dele.</p></div>
   </div>
   <dl class="teclas">
-    <dt>Na rua</dt><dd>Setas ou WASD andam. E conversa. Clique numa abertura da casa que brilha para entrar.</dd>
-    <dt>Nas fases</dt><dd>A e D andam, W ou espaço pula, o mouse mira, o clique solta água, Shift esquiva, E interage.</dd>
-    <dt>Sempre</dt><dd>Esc abre o menu ou volta para a casa.</dd>
+    <dt>Na rua</dt><dd>Setas ou WASD andam. E conversa com quem está perto. Clique numa porta ou janela da casa que estiver brilhando para entrar numa fase.</dd>
+    <dt>Nas fases</dt><dd>A e D andam. W ou espaço pula. O mouse aponta a mangueira e o clique solta água. Shift desvia. E fala com as pessoas e usa objetos.</dd>
+    <dt>Sempre</dt><dd>Esc abre o menu. Dentro de uma fase, Esc volta para a rua.</dd>
   </dl>
   <div class="itens"><button id="bComoOk">Voltar</button></div>
 </section>
@@ -84,7 +85,7 @@
   <div class="cols">
     <div><h3>Objetivo</h3><p id="tutO"></p></div>
     <div><h3>Como jogar</h3><p id="tutJ"></p></div>
-    <div><h3>Para pensar</h3><p id="tutP"></p></div>
+    <div><h3>Do que esta fase fala</h3><p id="tutP"></p></div>
   </div>
   <div class="itens"><button id="tutOk">Entrar</button></div>
 </section>

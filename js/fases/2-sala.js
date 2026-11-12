@@ -63,12 +63,11 @@ FASES[1]={x0:0,x1:10.8,H:3.9,inicio:.8,
     const j=porId('jessica');j.fora=true;roomScene.add(jessica.root);jessica.root.position.set(2.1,0,-.3);jessica.root.rotation.y=rad(70);F.figs.push(jessica);
   },
   comeca(F){
-    diz([['','A sala virou mostruário. Cada móvel tem preço.'],
-         ['Televisão','NANÁ. CPF FINAL 47. VOCÊ FOI PRÉ-APROVADA.'],
-         ['Jéssica','Olha aí, Naná. Kit cidadã em doze vezes. Tem até meu nome na tela.'],
-         ['Naná','Tem o meu também. Eu não dei.'],
-         ['Televisão','OFERTA VÁLIDA ENQUANTO DURAREM OS CIDADÃOS.'],
-         ['','Os Etiquetadores saem da tela e põem preço no que encontram. Lave antes que a sala inteira vire vitrine.']],
+    diz([['','A sala da casa virou uma loja. Todos os móveis estão com etiqueta de preço.'],
+         ['Televisão','Naná, seu CPF foi pré-aprovado. Leve o kit cidadã em doze vezes.'],
+         ['Jéssica','Olha, Naná, meu nome apareceu na tela também. Nunca nenhuma loja me deu crédito.'],
+         ['Naná','Eu não passei meu CPF pra ninguém. Como é que a televisão sabe?'],
+         ['','Os Etiquetadores vão sair da televisão e pôr preço nas coisas da casa. Derrube com água e limpe o que eles marcarem.']],
       ()=>{F.st='jogo';F.onda=0;F.fila=2;F.tSolta=.5;});
   },
   anim(tt,dt){
@@ -97,21 +96,21 @@ FASES[1]={x0:0,x1:10.8,H:3.9,inicio:.8,
       if(F.tOnda>1.6){
         F.tOnda=0;F.onda++;
         if(F.onda>=3){this.decide(F);return;}
-        F.fila=[2,3,4][F.onda];F.tSolta=.3;recado('A tela pisca de novo.',1.8);
+        F.fila=[2,3,4][F.onda];F.tSolta=.3;recado('Mais Etiquetadores saindo da televisão.',1.8);
       }
     }
     F.dica=null;
   },
   decide(F){
     F.st='decisao';
-    diz([['','A tela para de cuspir etiqueta. Fica esperando.'],
-      ['Jéssica','E aí, assina comigo? Crédito é a única porta que abriram pra mim.',[
-      {t:'Assinar o crediário com ela.',fn:()=>{G.voz.add('jessica');soma('medida',15);resolve(1,[
-        ['Jéssica','Doze vezes. Hoje eu subo pra laje com nota fiscal.'],['Televisão','PARABÉNS. VOCÊS AGORA SÃO CLIENTES.']]);}},
+    diz([['','A televisão parou de soltar etiquetas e está esperando uma resposta.'],
+      ['Jéssica','E aí, Naná, assina comigo? Sozinha eles não aprovam meu cadastro.',[
+      {t:'Assinar o crediário junto com ela.',fn:()=>{G.voz.add('jessica');soma('medida',15);resolve(1,[
+        ['Jéssica','Assinado. Hoje à noite eu vou pra reunião na laje com você.'],['Televisão','Parabéns. Agora vocês têm uma dívida de doze meses.']]);}},
       {t:'Desligar a televisão.',fn:()=>{F.tvOn=false;G.flags.radio=true;G.flags.zeConfia=true;G.flags.jessicaContra=true;hud();resolve(1,[
-        ['','A tela apaga. No lugar do jingle entra um chiado, e depois a voz de Seu Zé Rádio.'],['Jéssica','Tu desligou a minha chance, Naná.']]);}},
-      {t:'Vender geladinho pra Fila junto com ela.',fn:()=>{G.voz.add('jessica');soma('agua',-100);resolve(1,[
-        ['Jéssica','Tu entra com a água, eu entro com o isopor.'],['Naná','A Fila não acaba. Freguês também não.']]);}}
+        ['','A televisão apaga. O rádio de Seu Zé volta a funcionar no lugar da propaganda.'],['Jéssica','Você tirou a chance que eu tinha de comprar alguma coisa. Fiquei chateada.']]);}},
+      {t:'Chamar Jéssica para vender geladinho para o povo da Fila.',fn:()=>{G.voz.add('jessica');soma('agua',-100);resolve(1,[
+        ['Jéssica','Fechado. Você entra com cem litros de água e eu com o isopor.'],['Naná','Tem muita gente parada nessa fila. Dá pra ganhar um dinheiro sem ficar devendo.']]);}}
     ]]]);
   }
 };

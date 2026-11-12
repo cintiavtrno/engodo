@@ -12,8 +12,8 @@ function hud(){
   $('hCorpo').textContent='●'.repeat(G.corpo)+'○'.repeat(3-G.corpo);$('wCorpo').hidden=mode!=='fase';
 }
 function soma(k,v){G[k]=Math.max(0,Math.min(k==='agua'?1000:100,G[k]+v));hud();
-  if(G.agua<=0)fimDoDia('Caixa seca','A caixa foi ligada à rede. A água passa a chegar em forma de conta.');
-  else if(G.medida>=100)fimDoDia('Unidade 0047','A casa se dobra em planta baixa e recebe um número.');
+  if(G.agua<=0)fimDoDia('A água acabou','A caixa da rua secou. Agora os moradores dependem da empresa e vão pagar conta todo mês.');
+  else if(G.medida>=100)fimDoDia('A casa foi toda medida','Tudo na casa recebeu etiqueta e número de cadastro. Ela passou a fazer parte do programa da Fila.');
 }
 let acabou=false;
 function fimDoDia(t,d){
@@ -119,7 +119,7 @@ function etiquetaCorpo(sx){
   G.corpo++;PJ.inv=1.3;PJ.vx=sx*4.2;PJ.vy=3;
   if(G.corpo>=3){
     G.corpo=0;soma('medida',10);PJ.x=FS.inicio;PJ.y=0;PJ.vx=PJ.vy=0;PJ.inv=2.5;
-    recado('Cadastrada. Você acorda na porta, e a casa perde mais um pedaço.',3.5);
+    recado('Naná levou três etiquetas e foi cadastrada. Ela volta para a entrada e a Medida sobe 10.',3.5);
   }
   hud();
 }
@@ -365,7 +365,7 @@ function abreFase(i){
   faseTick(clock.getElapsedTime(),0);
   tween(1400,k=>{const e=ease(k);roomScene.fog.near=lerp(.05,18,e);roomScene.fog.far=lerp(.9,70,e);},()=>{
     busy=false;
-    if(FS.feita)diz([['','Isso já foi resolvido hoje. O lugar está quieto.']],()=>{FS.st='livre';});
+    if(FS.feita)diz([['','Você já resolveu esta fase hoje.']],()=>{FS.st='livre';});
     else tutorial(i,()=>d.comeca(FS));
   });
 }

@@ -69,9 +69,9 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
     F.barra=lmesh(new T.BoxGeometry(1,.05,.02),M_GOTA,11.35,3.62,-.2);F.barra.castShadow=false;F.barra.scale.x=.001;
   },
   comeca(F){
-    diz([['','Atrás do portão fica o quadro de hidrômetros da rua. Eles brotam na parede como cogumelo.'],
-         ['Naná','O relógio da casa é o último, lá em cima. Leitura de hoje: a minha.'],
-         ['','As Trenas saem dos canos. O que ficar entre as duas pontas da fita é medido. Água lava.']],
+    diz([['','Esta é a garagem da casa. Na parede ficam os medidores de água da rua inteira, e a cada minuto aparecem mais.'],
+         ['Naná','O medidor da minha casa é o último, lá no alto. Hoje a empresa mandou eu medir o meu próprio consumo.'],
+         ['','Cuidado com as Trenas que saem dos canos. Elas esticam uma fita entre dois objetos, e tudo o que fica no meio passa a ter dono e preço. Jogue água para desfazer.']],
       ()=>{F.st='jogo';const a=inimigo('trena',.4,.4),b=inimigo('trena',12.0,.4);});
   },
   anim(tt,dt){
@@ -86,7 +86,7 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
     if(F.tSpawn<=0&&F.ini.filter(e=>e.morre<=0).length<3){const b=F.bocas[(R()*F.bocas.length)|0];inimigo('trena',b[0],b[1]);F.tSpawn=7;}
     const perto=Math.abs(PJ.x-11.35)<.7&&PJ.y>2.4;
     if(perto){
-      F.dica='Segure E para ler o relógio da casa';
+      F.dica='Segure E para ler o medidor da casa';
       if(fk.has('KeyE'))F.leitura+=dt/3;else F.leitura=Math.max(0,F.leitura-dt*.5);
       if(F.leitura>=1){F.leitura=0;this.decide(F);}
     }else{F.dica=null;F.leitura=Math.max(0,F.leitura-dt);}
@@ -94,13 +94,13 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
   },
   decide(F){
     F.st='decisao';
-    diz([['Coletor','LEITURA DO IMÓVEL 0047. CONFIRMAR?',[
-      {t:'Registrar a leitura real.',fn:()=>{soma('medida',15);G.flags.bico=true;resolve(0,[
-        ['Coletor','Leitura registrada. Bico de pressão liberado para a agente.'],['Naná','Medi a minha casa do mesmo jeito que meço a dos outros.']]);}},
-      {t:'Registrar zero.',fn:()=>{G.flags.fraude=true;resolve(0,[
-        ['Coletor','Consumo: zero. Leitura aceita.'],['Naná','Hoje passa. Amanhã o aviso vai saber.']]);}},
-      {t:'Quebrar o relógio.',fn:()=>{soma('medida',-10);G.flags.prancheta=true;F.relogio.visible=false;resolve(0,[
-        ['','O vidro cede no terceiro golpe. Em algum lugar, uma prancheta se levanta da mesa.'],['Naná','Agora tem alguém vindo atrás de mim.']]);}}
+    diz([['Coletor','Leitura da casa 0047. O que você vai registrar?',[
+      {t:'Registrar o consumo de verdade.',fn:()=>{soma('medida',15);G.flags.bico=true;resolve(0,[
+        ['Coletor','Leitura registrada. A conta desta casa vai subir. A empresa liberou um bico mais forte para a sua mangueira.'],['Naná','Fiz com a minha casa o que eu faço com a dos vizinhos todo dia.']]);}},
+      {t:'Registrar zero, como se a casa não gastasse água.',fn:()=>{G.flags.fraude=true;resolve(0,[
+        ['Coletor','Consumo zero. Leitura aceita.'],['Naná','Hoje ninguém percebe. Amanhã a empresa pode descobrir.']]);}},
+      {t:'Quebrar o medidor.',fn:()=>{soma('medida',-10);G.flags.prancheta=true;F.relogio.visible=false;resolve(0,[
+        ['','O medidor quebra. A casa fica menos medida, mas a empresa manda um fiscal atrás de Naná.'],['Naná','Agora vou ter alguém me seguindo o resto do dia.']]);}}
     ]]]);
   }
 };

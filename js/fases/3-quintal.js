@@ -89,9 +89,9 @@ FASES[2]={x0:0,x1:13.2,H:4.8,inicio:.9,
     F.bt=0;F.nb=0;F.px=F.inicio;F.etq=0;
   },
   comeca(F){
-    diz([['','O quintal é uma esteira de baldes sem começo. O chão anda para trás.'],
-         ['Binho','Passa balde, viro o balde, passa outro.'],
-         ['','As Catracas só abrem na batida do relógio de ponto. Dá para passar na batida, pular por cima ou derrubar por trás.']],
+    diz([['','O quintal virou uma fábrica. A esteira carrega os baldes e empurra para trás quem pisa nela.'],
+         ['Binho','Consegui emprego aqui, Naná. Meu serviço é virar balde o dia todo, sempre o mesmo movimento.'],
+         ['','Para chegar até Binho, passe pelas catracas. Elas abrem quando o relógio de ponto bate. Você também pode pular por cima ou derrubar com água pelo lado de trás.']],
       ()=>{F.st='jogo';});
   },
   anim(tt,dt){
@@ -129,14 +129,14 @@ FASES[2]={x0:0,x1:13.2,H:4.8,inicio:.9,
   decide(F){
     F.st='decisao';
     const presas=F.cats.filter(c=>c.hp>0&&c.morre<=0).length;
-    diz([['Binho','Tô no turno, Naná. Se eu sair agora, perco o dia. Se eu ficar, perco o braço.',[
-      {t:'Tirar Binho da linha.',off:presas?'as catracas não deixam ele voltar; derrube por trás':null,fn:()=>{G.voz.add('binho');G.flags.binhoSemDia=true;hud();resolve(2,[
-        ['Binho','Saí. Mas o dia de hoje ninguém me paga, e eu vou dizer isso lá em cima.'],['','O braço dele continua fazendo o gesto. Ele segura com a outra mão.']]);}},
+    diz([['Binho','Naná, meu braço já está doendo. Mas se eu sair antes da hora, não recebo o dia.',[
+      {t:'Tirar Binho da linha.',off:presas?'as catracas não deixam ele sair; derrube todas por trás':null,fn:()=>{G.voz.add('binho');G.flags.binhoSemDia=true;hud();resolve(2,[
+        ['Binho','Saí. Só que perdi o pagamento de hoje, e vou falar disso na reunião.'],['','O braço de Binho continua fazendo o movimento sozinho por um tempo.']]);}},
       {t:'Trabalhar um turno ao lado dele.',fn:()=>{G.flags.turno=true;soma('agua',200);resolve(2,[
-        ['','Passa balde, vira o balde, passa outro. A sirene toca. São duzentos litros e uma hora a menos.'],['Binho','Viu? Dá pra viver. Só não dá pra parar.']]);}},
+        ['','Naná trabalha um turno na esteira. Recebe duzentos litros de água como pagamento e perde uma hora do dia.'],['Binho','Com esse emprego dá pra pagar as contas. O ruim é que não sobra tempo nem força pra mais nada.']]);}},
       {t:'Travar a esteira.',fn:()=>{G.flags.esteiraTravada=true;F.vEst=0;resolve(2,[
-        ['','Naná enfia a chave na engrenagem. A esteira range e para. Os baldes ficam onde estão.'],['Binho','Amanhã eles consertam.'],['Naná','Amanhã ela vem mais devagar.']]);}},
-      {t:'Ainda não. Voltar para a linha.',fn:()=>{F.st='jogo';}}
+        ['','Naná trava a engrenagem e a esteira para.'],['Binho','Amanhã eles consertam.'],['Naná','Pelo menos hoje ninguém se machuca nela.']]);}},
+      {t:'Ainda não. Voltar para a esteira.',fn:()=>{F.st='jogo';}}
     ]]]);
   }
 };

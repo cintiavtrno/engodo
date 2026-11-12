@@ -42,10 +42,10 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
     F.juntas=[];F.gira=false;F.t=0;
   },
   comeca(F){
-    diz([['','Dentro da caixa há uma lagoa com céu próprio. O nível dela é a água que a rua ainda tem.'],
-         ['Seu Aurelino','Água parada decora o que vê. Senta aí que eu te leio um pedaço.'],
-         ['','No fundo, alguma coisa começa a girar. Três mangueiras laranja descem pela parede.'],
-         ['Seu Aurelino','É a Bomba. Pra ela isso aqui é quilowatt. Corta as juntas, menina.']],
+    diz([['','Este é o lado de dentro da caixa d\'água da rua. A altura da água aqui é a mesma do marcador Água lá em cima.'],
+         ['Seu Aurelino','Eu cuido dessa água desde que tua avó construiu a caixa. Todas as casas da rua bebem daqui.'],
+         ['','Uma bomba foi ligada na parede. Ela puxa a água da rua por três mangueiras laranja.'],
+         ['Seu Aurelino','Estão levando nossa água pra gerar energia pra outro bairro. Acerta a ponta das mangueiras com água pra soltar.']],
       ()=>{F.st='jogo';F.gira=true;F.mang.forEach(m=>m.visible=true);F.juntas=F.pts.map(([x,y])=>inimigo('junta',x,y));});
   },
   anim(tt,dt){
@@ -67,7 +67,7 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
     if(F.st==='jogo'){
       const n=F.juntas.filter(j=>j.hp>0).length;
       if(n){soma('agua',-2.5*n*dt);F.dica=null;}
-      else{F.st='calmo';F.gira=false;recado('A Bomba para. A lagoa fica quieta. Fale com Seu Aurelino.',3);}
+      else{F.st='calmo';F.gira=false;recado('A bomba parou. Fale com Seu Aurelino na canoa.',3);}
     }
     if(F.st==='calmo'){
       if(Math.abs(PJ.x-c.x)<1.3&&Math.abs(PJ.y-c.p.y)<.9){F.dica='E · falar com Seu Aurelino';if(usouE)this.decide(F);}else F.dica=null;
@@ -76,19 +76,19 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
   decide(F){
     F.st='decisao';
     const volta=()=>{F.st='calmo';};
-    diz([['Seu Aurelino','Parou. Agora dá pra ouvir. O que tu quer da água?',[
-      {t:'Perguntar o que a água lembra.',fn:()=>{
-        diz([['Seu Aurelino','Ela lembra de quem levantou esta caixa. Tua avó. Tu lembra onde ela está?',[
-          {t:'Enterrada no Campo Santo. Eu que paguei.',fn:()=>fim('campo','A água guarda o nome dela. Não guarda mais o rosto.')},
-          {t:'Aqui dentro. Nunca saiu.',fn:()=>fim('caixa','No fundo, entre as turbinas paradas, alguém varre o chão devagar.')},
-          {t:'Foi pra frente da Fila em 94. Mandou um cartão.',fn:()=>fim('fila','A água lembra do cartão. Era uma foto de um lugar que ainda não existe.')}
+    diz([['Seu Aurelino','A bomba desligou. E agora, o que a gente faz com a água que sobrou?',[
+      {t:'Pedir a ele para contar a história da caixa.',fn:()=>{
+        diz([['Seu Aurelino','Quem construiu esta caixa foi tua avó, Dete, pra rua não depender de ninguém. Você sabe onde ela está hoje?',[
+          {t:'Ela morreu. Fui eu que paguei o enterro.',fn:()=>fim('campo','Seu Aurelino conta como Dete juntou os vizinhos e levantou a caixa em mutirão.')},
+          {t:'Ela mora aqui dentro da caixa até hoje.',fn:()=>fim('caixa','No fundo da caixa, uma senhora varre o chão devagar. É Dete.')},
+          {t:'Ela entrou na Fila em 1994 e nunca voltou.',fn:()=>fim('fila','Seu Aurelino conta que Dete acreditou na promessa da Fila e foi embora esperando a vez dela.')}
         ]]]);
-        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Leva isso contigo: água que lembra lava mais fácil.'],['','Naná aprende a Lavar. Daqui em diante, o que foi medido sai com menos água.']]);}
+        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Tua avó me ensinou a lavar gastando pouca água. Vou te ensinar.'],['','Naná aprendeu a Lavar. A partir de agora ela gasta menos água para limpar o que foi medido.']]);}
       }},
       {t:'Pescar com ele.',fn:()=>{G.voz.add('aurelino');G.flags.horas=(G.flags.horas||0)+1;hud();resolve(4,[
-        ['','A linha desce. Demora. Sobe um recibo molhado, depois um chinelo, depois nada.'],['Seu Aurelino','Perdeu uma hora e ganhou um velho. Eu subo pra laje contigo.']]);}},
-      {t:'Abrir o registro para a rua.',fn:()=>{G.flags.registro=true;soma('agua',-150);resolve(4,[
-        ['','Naná gira a chave. Cento e cinquenta litros descem pelas mangueiras de jardim até as casas.'],['Seu Aurelino','A rua vai saber quem abriu.']]);}},
+        ['','Naná passa uma hora pescando com Seu Aurelino. Os dois conversam sobre a rua.'],['Seu Aurelino','Gostei da conversa. Eu vou com você pra reunião na laje.']]);}},
+      {t:'Abrir o registro e mandar água para as casas.',fn:()=>{G.flags.registro=true;soma('agua',-150);resolve(4,[
+        ['','Naná abre o registro. Cento e cinquenta litros saem da caixa e chegam às torneiras dos vizinhos.'],['Seu Aurelino','Os vizinhos vão lembrar que foi você quem mandou a água.']]);}},
       {t:'Ainda não.',fn:volta}
     ]]]);
   }
