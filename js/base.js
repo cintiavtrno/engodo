@@ -223,7 +223,8 @@ renderer.shadowMap.type=T.PCFSoftShadowMap;
 renderer.outputEncoding=T.sRGBEncoding;
 const scene=new T.Scene();
 scene.background=new T.Color(BG);
-scene.fog=new T.Fog(BG,28,70);
+const FN=17,FF=46;   // neblina da rua: começa perto para o chão sumir no horizonte
+scene.fog=new T.Fog(BG,FN,FF);
 const camera=new T.PerspectiveCamera(38,1,.1,200);
 const HOME={pos:new T.Vector3(8.2,5.2,9.6),target:new T.Vector3(-.1,2.3,0)};
 camera.position.copy(HOME.pos);
@@ -231,8 +232,8 @@ camera.position.copy(HOME.pos);
 const controls=new T.OrbitControls(camera,renderer.domElement);
 controls.enableDamping=true;controls.dampingFactor=.08;
 controls.target.copy(HOME.target);
-controls.minDistance=4;controls.maxDistance=24;
-controls.maxPolarAngle=Math.PI/2-.02;
+controls.minDistance=7;controls.maxDistance=19;controls.enablePan=false;
+controls.maxPolarAngle=1.36;controls.minPolarAngle=.5;
 controls.autoRotateSpeed=1.1;controls.enableKeys=false;
 controls.update();
 
@@ -428,4 +429,10 @@ cyl(.052,.052,.03,TUBE.x,TUBE.y0-.01,TUBE.z,M.dark);cyl(.052,.052,.03,TUBE.x,TUB
 /* ---------- a rua: chão maior em volta da base, um degrau abaixo ---------- */
 M.rua=matOf(plaster('#77736d',['#615e5a','#8b8780'],9,false,'35,33,30'));
 box(10.6,.2,8.4,.1,-.2,.8,M.rua,3);
+/* chão sem fim: a rua deixa de ser uma maquete solta e se perde na neblina */
+function chaoInfinito(cena){
+  const m=new T.Mesh(new T.PlaneGeometry(260,260),new T.MeshStandardMaterial({color:new T.Color(0xcfc8bd).convertSRGBToLinear(),roughness:1}));
+  m.rotation.x=-Math.PI/2;m.position.y=-.302;m.receiveShadow=true;cena.add(m);return m;
+}
+chaoInfinito(scene);
 

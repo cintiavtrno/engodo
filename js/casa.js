@@ -162,7 +162,7 @@ const tweens=[];
 function tween(dur,fn,done){tweens.push({t0:performance.now(),dur,fn,done});}
 
 function setLimits(m){
-  if(m==='house'){controls.minDistance=4;controls.maxDistance=24;controls.maxPolarAngle=Math.PI/2-.02;controls.minPolarAngle=0;controls.enablePan=true;}
+  if(m==='house'){controls.minDistance=7;controls.maxDistance=19;controls.maxPolarAngle=1.36;controls.minPolarAngle=.5;controls.enablePan=false;}   // câmera de palco: gira e aproxima um pouco, sem soltar
   else if(m==='free'){controls.minDistance=0;controls.maxDistance=Infinity;controls.maxPolarAngle=Math.PI;controls.minPolarAngle=0;controls.enablePan=false;}
   else{controls.minDistance=.5;controls.maxDistance=roomSpec.size[2]/2-1.2;controls.minPolarAngle=.6;controls.maxPolarAngle=1.9;controls.enablePan=false;}
 }
@@ -207,7 +207,7 @@ function enter(i){
   tween(2000,k=>{
     const e=ease(k),f=Math.pow(k,2.2);
     camera.position.lerpVectors(sp,end,e);controls.target.lerpVectors(st,P,e);
-    scene.fog.near=lerp(28,.05,f);scene.fog.far=lerp(70,.9,f);
+    scene.fog.near=lerp(FN,.05,f);scene.fog.far=lerp(FF,.9,f);
   },()=>openRoom(i));
 }
 function openRoom(i){
@@ -238,9 +238,9 @@ function leave(){
     tween(2000,k=>{
       const e=ease(k),f=Math.pow(1-k,2.2);
       camera.position.lerpVectors(sp,HOME.pos,e);controls.target.lerpVectors(st,HOME.target,e);
-      scene.fog.near=lerp(28,.05,f);scene.fog.far=lerp(70,.9,f);
+      scene.fog.near=lerp(FN,.05,f);scene.fog.far=lerp(FF,.9,f);
     },()=>{
-      scene.fog.near=28;scene.fog.far=70;
+      scene.fog.near=FN;scene.fog.far=FF;
       setLimits('house');controls.enabled=true;busy=false;current=-1;
     });
   });

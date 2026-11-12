@@ -285,7 +285,7 @@ function faseTick(tt,dt){
   /* câmera lateral, de teatro de caixa */
   if(camera.fov!==30){camera.fov=30;camera.updateProjectionMatrix();}
   const dist=10.4,meio=Math.tan(15*Math.PI/180)*dist*camera.aspect;
-  let a=FS.x0+meio-.9,b=FS.x1-meio+.9,cx=a>b?(FS.x0+FS.x1)/2:Math.max(a,Math.min(b,PJ.x));
+  let a=FS.x0+meio-.9,b=FS.x1-meio+(FS.margemD||.9),cx=a>b?(FS.x0+FS.x1)/2:Math.max(a,Math.min(b,PJ.x));
   FS.cx+=(cx-FS.cx)*Math.min(1,dt*3.5);
   const cy=FS.alta?Math.max(2.3,Math.min(FS.H-2.6,PJ.y+1.3)):Math.max(FS.H/2-.35,Math.min(FS.H/2+.35,PJ.y+.9));FS.cy+=(cy-FS.cy)*Math.min(1,dt*2.5);
   camera.position.set(FS.cx,FS.cy+.25,dist);controls.target.set(FS.cx,FS.cy,0);
@@ -360,6 +360,15 @@ function faseTick(tt,dt){
   if(FS.recadoT>0){FS.recadoT-=dt;elAviso.textContent=FS.recado;elAviso.hidden=false;}
   else if(FS.dica&&!parado){elAviso.textContent=FS.dica;elAviso.hidden=false;}
   else elAviso.hidden=true;
+  /* coro dos vizinhos: conversa de fundo enquanto Naná trabalha */
+  const elC=$('coro');
+  if(FS.coro&&FS.st==='jogo'&&!parado){
+    FS.ct+=dt;const k=Math.floor(FS.ct/7.5),f=FS.ct-k*7.5;
+    if(k<FS.coro.length&&f>1.6){
+      if(FS.ck!==k){FS.ck=k;$('coroQ').textContent=FS.coro[k][0];$('coroT').textContent=FS.coro[k][1];}
+      elC.hidden=false;elC.style.opacity=Math.min(1,(f-1.6)*2,(7.5-f)*2);
+    }else elC.hidden=true;
+  }else elC.hidden=true;
   usouE=false;
 }
 
@@ -368,6 +377,7 @@ function abreFase(i){
   const d=FASES[i];
   FS={i,x0:d.x0,x1:d.x1,H:d.H,inicio:d.inicio,props:[],plat:[{x0:d.x0,x1:d.x1,y:0}],ini:[],tags:[],figs:[],mortos:0,st:'intro',recadoT:0,cx:d.inicio,cy:d.H/2,feita:G.feitas.has(i)};
   d.monta(FS);
+  chaoInfinito(roomScene);FS.coro=COROS[i]||null;FS.ct=0;FS.ck=-1;
   if(d.tick)FS.tick=d.tick.bind(d);
   if(d.anim)FS.anim=d.anim.bind(d);
   FS.plat.sort((a,b)=>b.y-a.y);
@@ -379,17 +389,17 @@ function abreFase(i){
   roomTitle.textContent=(i+1)+'. '+OPS[i].t;roomTitle.hidden=false;backB.hidden=false;
   $('rot').hidden=true;$('reset').hidden=true;listEl.hidden=true;elCtl.hidden=true;elHint.textContent=HINT_FASE;hud();
   faseTick(clock.getElapsedTime(),0);
-  tween(1400,k=>{const e=ease(k);roomScene.fog.near=lerp(.05,18,e);roomScene.fog.far=lerp(.9,70,e);},()=>{
+  tween(1400,k=>{const e=ease(k);roomScene.fog.near=lerp(.05,15,e);roomScene.fog.far=lerp(.9,48,e);},()=>{
     busy=false;
     if(FS.feita)diz([['','Você já resolveu esta fase hoje.']],()=>{FS.st='livre';});
-    else tutorial(i,()=>d.comeca(FS));
+    else vinheta(VIN[i],()=>tutorial(i,()=>d.comeca(FS)));
   });
 }
 function fechaFase(){
   ELENCO.forEach(a=>{if(a.fora){a.fora=false;scene.add(a.f.root);a.f.root.visible=true;}});
   nana.bico.visible=false;
   fl=null;elDlg.hidden=true;elOps.innerHTML='';elDica.hidden=false;elAviso.hidden=true;
-  clearRoom();FS=null;gotasIM=null;
+  clearRoom();FS=null;gotasIM=null;$('coro').hidden=true;
   elHint.textContent=HINT_CASA;resize();hud();
 }
 function resolve(i,linhas){
