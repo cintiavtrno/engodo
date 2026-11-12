@@ -81,12 +81,12 @@ FASES[4]={x0:0,x1:12,H:5.6,inicio:1.2,inicioY:4.0,
         diz([['Seu Aurelino','Quem construiu esta caixa foi tua avó, Dete, pra rua não depender de ninguém. Você sabe onde ela está hoje?',[
           {t:'Ela morreu. Fui eu que paguei o enterro.',fn:()=>fim('campo','Seu Aurelino conta como Dete juntou os vizinhos e levantou a caixa em mutirão.')},
           {t:'Ela mora aqui dentro da caixa até hoje.',fn:()=>fim('caixa','No fundo da caixa, uma senhora varre o chão devagar. É Dete.')},
-          {t:'Ela entrou na Fila em 1994 e nunca voltou.',fn:()=>fim('fila','Seu Aurelino conta que Dete acreditou na promessa da Fila e foi embora esperando a vez dela.')}
+          {t:'Ela entrou na Fila em 1994 e nunca voltou.',fn:()=>fim('fila','Seu Aurelino conta que Dete acreditou na promessa da Fila. Foi embora para esperar a vez dela.')}
         ]]]);
-        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Tua avó me ensinou a lavar gastando pouca água. Vou te ensinar.'],['','Naná aprendeu a Lavar. A partir de agora ela gasta menos água para limpar o que foi medido.']]);}
+        function fim(k,l){G.flags.dete=k;G.flags.lavar=true;resolve(4,[['',l],['Seu Aurelino','Tua avó me ensinou a lavar com pouca água. Vou te ensinar.'],['','Naná aprendeu a Lavar. A partir de agora ela gasta menos água para limpar o que foi medido.']]);}
       }},
       {t:'Pescar com ele.',fn:()=>{G.voz.add('aurelino');G.flags.horas=(G.flags.horas||0)+1;hud();resolve(4,[
-        ['','Naná passa uma hora pescando com Seu Aurelino. Os dois conversam sobre a rua.'],['Seu Aurelino','Gostei da conversa. Eu vou com você pra reunião na laje.']]);}},
+        ['','Naná passa uma hora na pescaria com Seu Aurelino. Os dois conversam sobre a rua.'],['Seu Aurelino','Gostei da conversa. Eu vou com você pra reunião na laje.']]);}},
       {t:'Abrir o registro e mandar água para as casas.',fn:()=>{G.flags.registro=true;soma('agua',-150);resolve(4,[
         ['','Naná abre o registro. Cento e cinquenta litros saem da caixa e chegam às torneiras dos vizinhos.'],['Seu Aurelino','Os vizinhos vão lembrar que foi você quem mandou a água.']]);}},
       {t:'Ainda não.',fn:volta}

@@ -69,9 +69,9 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
     F.barra=lmesh(new T.BoxGeometry(1,.05,.02),M_GOTA,11.35,3.62,-.2);F.barra.castShadow=false;F.barra.scale.x=.001;
   },
   comeca(F){
-    diz([['','Esta é a garagem da casa. Na parede ficam os medidores de água da rua inteira, e a cada minuto aparecem mais.'],
+    diz([['','Esta é a garagem da casa. Os medidores de água da rua inteira ficam nesta parede. Toda hora aparece mais um.'],
          ['Naná','O medidor da minha casa é o último, lá no alto. Hoje a empresa mandou eu medir o meu próprio consumo.'],
-         ['','Cuidado com as Trenas que saem dos canos. Elas esticam uma fita entre dois objetos, e tudo o que fica no meio passa a ter dono e preço. Jogue água para desfazer.']],
+         ['','Cuidado com as Trenas que saem dos canos. Cada uma estica uma fita entre dois objetos. O que estiver no meio da fita ganha dono e preço. Para desfazer, jogue água.']],
       ()=>{F.st='jogo';const a=inimigo('trena',.4,.4),b=inimigo('trena',12.0,.4);});
   },
   anim(tt,dt){
@@ -100,7 +100,7 @@ FASES[0]={x0:0,x1:12.4,H:4.5,inicio:.9,
       {t:'Registrar zero, como se a casa não gastasse água.',fn:()=>{G.flags.fraude=true;resolve(0,[
         ['Coletor','Consumo zero. Leitura aceita.'],['Naná','Hoje ninguém percebe. Amanhã a empresa pode descobrir.']]);}},
       {t:'Quebrar o medidor.',fn:()=>{soma('medida',-10);G.flags.prancheta=true;F.relogio.visible=false;resolve(0,[
-        ['','O medidor quebra. A casa fica menos medida, mas a empresa manda um fiscal atrás de Naná.'],['Naná','Agora vou ter alguém me seguindo o resto do dia.']]);}}
+        ['','O medidor quebra. A casa fica menos medida, mas a empresa manda um fiscal atrás de Naná.'],['Naná','Agora um fiscal vai me seguir o resto do dia.']]);}}
     ]]]);
   }
 };

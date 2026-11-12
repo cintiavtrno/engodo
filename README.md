@@ -31,8 +31,9 @@ Abra `index.html` por um servidor local (por exemplo `python3 -m http.server`) o
 3. Tempos modernos (Quintal)
 4. A obra (Escadaria)
 5. O livro (Dentro da Caixa)
+6. Um por cento (Laje das Sementes)
 
-Faltam: Um por cento, Concessão, Na minha opinião, os interlúdios na Fila, o relógio do dia e a assembleia.
+Faltam: Concessão, Na minha opinião, os interlúdios na Fila, o relógio do dia e a assembleia.
 
 ## Para criar uma fase
 

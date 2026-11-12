@@ -96,14 +96,14 @@ FASES[1]={x0:0,x1:10.8,H:3.9,inicio:.8,
       if(F.tOnda>1.6){
         F.tOnda=0;F.onda++;
         if(F.onda>=3){this.decide(F);return;}
-        F.fila=[2,3,4][F.onda];F.tSolta=.3;recado('Mais Etiquetadores saindo da televisão.',1.8);
+        F.fila=[2,3,4][F.onda];F.tSolta=.3;recado('Saíram mais Etiquetadores da televisão.',1.8);
       }
     }
     F.dica=null;
   },
   decide(F){
     F.st='decisao';
-    diz([['','A televisão parou de soltar etiquetas e está esperando uma resposta.'],
+    diz([['','A televisão parou de soltar etiquetas. Agora ela espera uma resposta.'],
       ['Jéssica','E aí, Naná, assina comigo? Sozinha eles não aprovam meu cadastro.',[
       {t:'Assinar o crediário junto com ela.',fn:()=>{G.voz.add('jessica');soma('medida',15);resolve(1,[
         ['Jéssica','Assinado. Hoje à noite eu vou pra reunião na laje com você.'],['Televisão','Parabéns. Agora vocês têm uma dívida de doze meses.']]);}},

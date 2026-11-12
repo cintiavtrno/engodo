@@ -35,21 +35,24 @@ window.addEventListener('keydown',e=>{
 
 /* tutorial: objetivo, como jogar e a pergunta da fase */
 const TUT=[
- {o:'Subir até o medidor de água da casa, no cano mais alto, e fazer a leitura. No caminho, impedir que as Trenas meçam as coisas da garagem.',
-  j:'Use os canos e o carro coberto para subir. A Trena estica uma fita entre dois objetos e tudo o que fica no meio vira desenho branco. Jogue água para desfazer a Trena e para limpar o que ela marcou. No medidor, segure a tecla E.',
-  p:'Naná trabalha para a companhia de água medindo o consumo das casas. Em muitos bairros esse serviço é feito por moradores contratados por fora, que acabam cobrando os próprios vizinhos. Nesta fase a empresa manda Naná medir a casa dela, e você escolhe o que ela registra.'},
- {o:'Resistir a três ataques dos Etiquetadores sem deixar que eles ponham preço em tudo. Depois, responder ao pedido de Jéssica.',
-  j:'Suba no sofá, na mesa e na estante. Acerte os Etiquetadores com água enquanto voam, e limpe os móveis que eles marcarem. Se três etiquetas caírem em Naná, ela volta para a entrada e a Medida sobe.',
-  p:'A televisão oferece um "kit cidadã" para pagar em doze vezes. A fase mostra o que acontece quando a pessoa só é bem tratada se puder comprar. Jéssica quer assinar porque nunca recebeu crédito de loja nenhuma.'},
- {o:'Atravessar a esteira até o lugar onde Binho trabalha e decidir com ele o que fazer.',
-  j:'A esteira empurra você para trás. As catracas fecham a passagem e só abrem quando o relógio de ponto bate. Passe nessa hora, pule por cima a partir das plataformas de madeira ou derrube a catraca com água pelo lado de trás. Pule os cartões que vêm pelo chão.',
-  p:'Binho arrumou emprego numa linha de produção, repetindo o mesmo movimento o dia inteiro. O salário é necessário, mas o serviço machuca o corpo e toma todo o tempo dele. A fase mostra a situação de quem só encontra esse tipo de emprego.'},
- {o:'Subir a escadaria até Dona Marlene, lá no alto, e decidir o que fazer com a obra.',
-  j:'Suba andando. Quando o rolo compressor descer, segure E em frente a uma porta para se esconder, ou pule por cima dele. Os cones perseguem Naná: acerte com água. As casas por onde o rolo passa viram desenho branco, e você pode limpar.',
-  p:'Dona Marlene carrega balde ladeira acima há trinta anos e precisa da escada. O projeto da obra foi feito sem ouvir os moradores e passa por cima de duas casas. A fase mostra obras que o bairro precisa, mas que chegam decididas por gente de fora.'},
- {o:'Soltar as três mangueiras da bomba antes que a água acabe. Depois, conversar com Seu Aurelino.',
-  j:'A altura da água é o seu marcador Água: enquanto a bomba estiver ligada, ele desce. Você pode nadar, subir nas plataformas de madeira e na canoa. Acerte com água a ponta laranja de cada mangueira. Não encoste nas turbinas do fundo.',
-  p:'Seu Aurelino cuida da caixa d\'água da rua e conhece a história dela. Uma bomba foi instalada para levar essa água e gerar energia para outro lugar. A fase mostra a disputa pela mesma água, e quem fica sem ela.'}
+ {o:'Suba até o medidor de água da casa, no cano mais alto, para fazer a leitura. Pelo caminho, não deixe as Trenas medirem as coisas da garagem.',
+  j:'Os canos e o carro coberto servem de degrau. Cada Trena estica uma fita entre dois objetos. O que fica no meio vira desenho branco. A água desfaz a Trena e limpa o que ela marcou. Quando chegar ao medidor, segure a tecla E.',
+  p:'Naná é paga pela companhia de água para medir o consumo das casas. Em muitos bairros, a empresa entrega esse serviço a moradores contratados por fora. São eles que levam a cobrança até a porta dos vizinhos. Nesta fase, a ordem é medir a própria casa. O que vai para o registro é escolha sua.'},
+ {o:'Aguente três ataques dos Etiquetadores. Eles querem pôr preço em tudo o que há na sala. Depois do terceiro ataque, responda ao pedido de Jéssica.',
+  j:'Dá para subir no sofá, na mesa e na estante. Acerte os Etiquetadores com água no ar. Móvel marcado fica branco até você limpar. Se três etiquetas caírem em Naná, ela volta para a entrada. Nesse caso, a Medida sobe.',
+  p:'A televisão oferece um "kit cidadã" para pagar em doze vezes. Muita gente só passa a ser bem tratada depois que vira cliente. Jéssica quer assinar porque loja nenhuma lhe deu crédito até hoje.'},
+ {o:'Atravesse a esteira até o lugar onde Binho trabalha. Lá, vocês dois decidem o que fazer.',
+  j:'A esteira empurra para trás quem fica parado. Três catracas fecham a passagem. Elas abrem por um instante quando o relógio de ponto bate. Fora dessa hora, pule por cima a partir das plataformas de madeira. Também dá para derrubar a catraca com água pelo lado de trás. Os cartões vêm rente ao chão. Pule.',
+  p:'Binho arrumou emprego numa linha de produção. Passa o dia inteiro no mesmo movimento. Ele precisa do salário, só que o serviço machuca o braço e não deixa tempo para mais nada. Muita gente só encontra emprego desse tipo.'},
+ {o:'Suba a escadaria até Dona Marlene, lá no alto. Com ela, decida o que fazer com a obra.',
+  j:'Para subir, basta andar. De tempos em tempos, um rolo compressor desce a escada. Segure E em frente a uma porta para se esconder, ou pule por cima dele. Os cones perseguem Naná até levarem água. Casa por onde o rolo passa vira desenho branco. Você pode limpar.',
+  p:'Dona Marlene carrega balde ladeira acima há trinta anos. Para ela, a escada faz falta de verdade. Só que o projeto foi feito sem ouvir ninguém da rua. Do jeito que foi desenhado, ele derruba duas casas.'},
+ {o:'Solte as três mangueiras da bomba antes que a água acabe. Depois, converse com Seu Aurelino.',
+  j:'A altura da água aqui dentro é o seu marcador Água. Com a bomba ligada, ele desce sem parar. Você pode nadar, subir nas plataformas de madeira e na canoa. Mire na ponta laranja de cada mangueira. Fique longe das turbinas do fundo. Quem encosta nelas leva etiqueta.',
+  p:'Seu Aurelino cuida da caixa d\'água da rua há muitos anos. Agora instalaram uma bomba para levar essa água a outro lugar, onde ela vai gerar energia. Cada litro levado pela bomba deixa de chegar às torneiras da rua.'},
+ {o:'Proteja os três potes de feijão de Tia Cotinha até os Carimbadores pararem de descer. Depois, decida com ela o destino das sementes.',
+  j:'Os Carimbadores descem do alto em direção aos potes. Acerte com água antes que encostem. Pote carimbado fica branco até você limpar. A pilha de tijolos e o caixote ajudam a alcançar os que vêm mais alto.',
+  p:'As sementes de Tia Cotinha estão na família há gerações. Há empresas que mudam um detalhe numa planta assim e registram a planta inteira como propriedade. Daí em diante, quem sempre plantou precisa pedir autorização. O nome da fase vem daí. A empresa diz que melhorou a semente em um por cento e, por isso, quer ser dona dela inteira.'}
 ];
 let tutFn=null;
 function tutorial(i,fn){

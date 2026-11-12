@@ -133,7 +133,7 @@ function novaGota(x,y,vx,vy){const g=gotas,i=g.i;g.i=(i+1)%g.n;g.px[i]=x;g.py[i]
 /* inimigos */
 function inimigo(tipo,x,y){
   const g=new T.Group();g.position.set(x,y,.05);roomScene.add(g);
-  const e={tipo,x,y,g,hp:{trena:14,etiq:8,catraca:24,cartao:2,cone:6,junta:16,rolo:1e9}[tipo],r:{trena:.24,etiq:.22,catraca:.46,cartao:.2,cone:.27,junta:.3,rolo:.5}[tipo],cy:{trena:.19,catraca:.55,cone:.22,rolo:.5}[tipo]||0,st:'nasce',t:0,morre:0,fase:R()*6};
+  const e={tipo,x,y,g,hp:{trena:14,etiq:8,catraca:24,cartao:2,cone:6,junta:16,rolo:1e9,carimbo:7}[tipo],r:{trena:.24,etiq:.22,catraca:.46,cartao:.2,cone:.27,junta:.3,rolo:.5,carimbo:.28}[tipo],cy:{trena:.19,catraca:.55,cone:.22,rolo:.5}[tipo]||0,st:'nasce',t:0,morre:0,fase:R()*6};
   const add=(geo,m,px,py,pz)=>{const me=new T.Mesh(geo,m);me.position.set(px||0,py||0,pz||0);me.castShadow=true;g.add(me);return me;};
   if(tipo==='trena'){
     const c=new T.CylinderGeometry(.19,.19,.12,10);c.rotateX(Math.PI/2);
@@ -170,6 +170,12 @@ function inimigo(tipo,x,y){
   }else if(tipo==='junta'){
     add(new T.IcosahedronGeometry(.19,0),M_LARANJA,0,0,0);
     const a=new T.CylinderGeometry(.24,.24,.07,8);a.rotateZ(Math.PI/2);add(a,M.planta,.06,0,0);
+  }else if(tipo==='carimbo'){
+    add(new T.CylinderGeometry(.05,.07,.3,8),M_LARANJA,0,.17,0);
+    add(new T.IcosahedronGeometry(.085,0),M_LARANJA,0,.34,0);
+    add(new T.BoxGeometry(.4,.1,.26),M.planta,0,0,0);
+    add(new T.BoxGeometry(.34,.03,.2),M_LARANJA,0,-.065,0);
+    e.st='desce';
   }
   FS.ini.push(e);return e;
 }
@@ -247,6 +253,16 @@ function atualizaInimigos(dt,t){
       if(e.x<1.0)e.hp=0;
     }else if(e.tipo==='junta'){
       e.g.scale.setScalar(1+Math.sin(t*6+e.fase)*.08);
+    }else if(e.tipo==='carimbo'){
+      /* carimbador: desce sobre um pote limpo, carimba e sobe para escolher outro */
+      if(e.st==='desce'){
+        if(!e.alvo||e.alvo.med){const l=FS.props.filter(p=>p.pote&&!p.med);e.alvo=l.length?l[(R()*l.length)|0]:null;}
+        if(!e.alvo){e.st='sobe';e.t=0;}
+        else{const tx=(e.alvo.x0+e.alvo.x1)/2,ty=e.alvo.y1+.12;e.x+=Math.sign(tx-e.x)*Math.min(Math.abs(tx-e.x),1.5*dt);e.y-=.85*dt;
+          if(e.y<=ty){e.y=ty;if(Math.abs(tx-e.x)<.25){mede(e.alvo);e.st='sobe';e.t=0;}}}
+      }else{e.y=Math.min(3.6,e.y+1.6*dt);if(e.y>3.3&&e.t>1.8){e.st='desce';e.alvo=null;}}
+      e.g.rotation.z=Math.sin(t*5+e.fase)*.1;
+      if(Math.hypot(e.x-PJ.x,e.y-(PJ.y+.6))<.42)etiquetaCorpo(Math.sign(PJ.x-e.x)||1);
     }
     e.g.position.set(e.x,e.y,.05);
   }
