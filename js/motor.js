@@ -116,11 +116,18 @@ function prop(ms,x0,x1,y0,y1){
   const p={ms:[].concat(ms),x0,x1,y0,y1,med:false,lav:0};p.orig=p.ms.map(m=>m.material);FS.props.push(p);return p;
 }
 function mede(p){if(p.med)return;p.med=true;p.lav=0;p.ms.forEach(m=>m.material=M.planta);soma('medida',2);carimbo(FS.selo);}
-/* carimbo: a versão oficial da Fila para o que acabou de acontecer */
+/* carimbo redondo: o recado da Fila sobre o que acabou de acontecer. s = [palavra do meio, recado] */
+function seloHTML(s){
+  const id='sp'+(seloHTML.k=(seloHTML.k||0)+1),c=s[0];
+  return '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="'+id+'" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>'+
+    '<circle cx="60" cy="60" r="56.5" stroke-width="3"/><circle cx="60" cy="60" r="34" stroke-width="1.5"/>'+
+    '<text class="anel"><textPath href="#'+id+'" textLength="276" lengthAdjust="spacing">FILA DO DESENVOLVIMENTO · A SUA VEZ VAI CHEGAR ·</textPath></text>'+
+    '<text class="meio" x="60" y="65" text-anchor="middle"'+(c.length>6?' textLength="58" lengthAdjust="spacingAndGlyphs"':'')+'>'+c+'</text></svg><span>'+s[1]+'</span>';
+}
 let seloT=0;
 function carimbo(t,forca){
   const agora=performance.now();if(!t||(!forca&&agora-seloT<7000))return;seloT=agora;
-  const el=$('selo');el.textContent=t;el.hidden=false;el.classList.remove('bate');void el.offsetWidth;el.classList.add('bate');
+  const el=$('selo');el.innerHTML=seloHTML(t);el.hidden=false;el.classList.remove('bate');void el.offsetWidth;el.classList.add('bate');
   clearTimeout(carimbo.h);carimbo.h=setTimeout(()=>{el.hidden=true;},3800);
 }
 function lava(p){if(!p.med)return;p.med=false;p.ms.forEach((m,i)=>m.material=p.orig[i]);soma('medida',-2);}
@@ -129,7 +136,7 @@ function etiquetaCorpo(sx){
   G.corpo++;PJ.inv=1.3;PJ.vx=sx*4.2;PJ.vy=3;
   if(G.corpo>=3){
     G.corpo=0;soma('medida',10);PJ.x=FS.inicio;PJ.y=0;PJ.vx=PJ.vy=0;PJ.inv=2.5;
-    carimbo('MORADORA CADASTRADA COM SUCESSO',true);
+    carimbo(['CADASTRADA','Naná foi cadastrada. Agora a Fila sabe a altura e o peso dela.'],true);
     recado('Naná levou três etiquetas e foi cadastrada. Ela volta para a entrada e a Medida sobe 10.',3.5);
   }
   hud();

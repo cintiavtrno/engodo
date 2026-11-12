@@ -92,13 +92,13 @@ FASES[3]={x0:0,x1:13.6,H:7.8,inicio:.6,
       ['Dona Marlene','É linda, né? Mármore, igual de igreja. O desenho veio pronto de longe. Quem desenhou nunca subiu esta ladeira.',[
       {t:'Chamar os vizinhos para emendar a escada até as portas.',c:"Pede pelo menos um vizinho com você. A escada passa a chegar nas portas e Dona Marlene vai à reunião.",off:G.voz.size<1?'você ainda não tem nenhum vizinho do seu lado':null,fn:()=>{G.flags.acordo=true;G.voz.add('marlene');hud();resolve(3,[
         ['','Os vizinhos trazem tábua, tijolo e um resto de cimento. A emenda sai torta e de outra cor, mas chega na porta de cada casa.'],
-        ['Dona Marlene','Agora dá pra subir com o balde. Eu vou pra reunião.']],"A rua terminou por conta própria a escada que veio pela metade. Dona Marlene sobe sem balde na cabeça e vai à reunião.","OBRA ALTERADA SEM PROJETO · MORADORES NOTIFICADOS");}},
+        ['Dona Marlene','Agora dá pra subir com o balde. Eu vou pra reunião.']],"A rua terminou por conta própria a escada que veio pela metade. Dona Marlene sobe sem balde na cabeça e vai à reunião.",["EMENDADA", "A rua terminou a escada sozinha. Para a Fila, o projeto original continua sendo o mais bonito."]);}},
       {t:'Parar a obra.',c:"A Medida cai 10. Dona Marlene fica sem escada e não vai à reunião.",fn:()=>{G.flags.marleneDesce=true;soma('medida',-10);resolve(3,[
         ['','Naná desliga a betoneira. Os homens da Fila guardam as ferramentas e descem sem dizer nada. A escada fica como está.'],
-        ['Dona Marlene','E eu volto pro balde. Hoje eu não vou pra reunião, não.']],"Sem obra, o rolo não mede mais nenhuma casa. Dona Marlene continua com o balde na ladeira e ficou magoada com Naná.","OBRA PARALISADA · COMUNIDADE RECUSOU O PROGRESSO");}},
+        ['Dona Marlene','E eu volto pro balde. Hoje eu não vou pra reunião, não.']],"Sem obra, o rolo não mede mais nenhuma casa. Dona Marlene continua com o balde na ladeira e ficou magoada com Naná.",["PARADA", "A obra parou a pedido. O mármore volta para o depósito."]);}},
       {t:'Deixar a obra seguir.',c:"Dona Marlene vai à reunião. A Medida sobe 25, porque o rolo continua passando pelas casas.",fn:()=>{G.voz.add('marlene');F.casas.forEach(p=>{if(!p.med){p.med=true;p.ms.forEach(m=>m.material=M.planta);}});soma('medida',25);resolve(3,[
         ['','A obra segue. O rolo desce mais uma vez pela ladeira. A escada de mármore fica pronta e continua sem chegar em porta nenhuma.'],
-        ['Dona Marlene','Pelo menos é bonita de olhar. Eu vou pra reunião. Quero perguntar pra que ela serve.']],"A escada foi entregue e não leva a porta nenhuma. O rolo mediu as casas da ladeira pelo caminho. Dona Marlene vai à reunião para perguntar pra que serve o mármore.","OBRA ENTREGUE NO PRAZO");}},
+        ['Dona Marlene','Pelo menos é bonita de olhar. Eu vou pra reunião. Quero perguntar pra que ela serve.']],"A escada foi entregue e não leva a porta nenhuma. O rolo mediu as casas da ladeira pelo caminho. Dona Marlene vai à reunião para perguntar pra que serve o mármore.",["ENTREGUE", "Escada entregue no prazo. A porta fica para a próxima etapa."]);}},
       {t:'Ainda não. Descer de volta.',fn:()=>{F.st='jogo';}}
     ]]]);
   }

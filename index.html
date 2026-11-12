@@ -50,19 +50,42 @@
 
 <!-- como jogar -->
 <section class="tela noite" id="tComo" hidden>
-  <span class="sobre">Como jogar</span>
-  <h2>Os três marcadores</h2>
-  <div class="cols">
-    <div><h3>Água</h3><p>É a água da caixa que abastece a rua. A mangueira de Naná usa essa mesma água. Se a caixa secar, a rua passa a depender da empresa. Nesse caso, o dia termina em derrota.</p></div>
-    <div><h3>Medida</h3><p>Os inimigos colam etiquetas nas coisas da casa. Tudo o que recebe etiqueta vira desenho branco, com dono e preço. Para limpar, jogue água. Com a Medida em 100%, a casa está perdida.</p></div>
-    <div><h3>Voz</h3><p>Mostra quantos vizinhos vão com você à reunião na laje, no fim do dia. Cada um decide ir ou ficar em casa conforme a escolha feita na fase dele.</p></div>
+  <span class="sobre">Como jogar · <span id="comoN"></span></span>
+
+  <div class="pg">
+    <h2>Um dia, seis vizinhos</h2>
+    <p class="lead">O jogo se passa em um único dia na rua de Naná. Você anda pela rua, conversa com os vizinhos e entra na casa pelas portas e janelas que brilham. Cada entrada é uma fase, com um vizinho e um problema. A ordem é você quem escolhe.</p>
+    <p class="lead">Toda fase tem a mesma sequência. Primeiro, você conhece o vizinho. Depois, enfrenta o que está acontecendo ali. No fim, toma uma decisão com ele. A decisão mexe nos três marcadores do alto da tela.</p>
+    <dl class="teclas">
+      <dt>Garagem</dt><dd>Naná recebe a ordem de medir a água da própria casa. Atrapalham: as Trenas.</dd>
+      <dt>Sala</dt><dd>Jéssica quer comprar a prazo pela primeira vez. Atrapalham: os Etiquetadores.</dd>
+      <dt>Quintal</dt><dd>Binho começou num emprego que machuca o braço. Atrapalham: a esteira e as catracas.</dd>
+      <dt>Ladeira</dt><dd>Dona Marlene espera uma escada há trinta anos. Atrapalham: o rolo compressor e os cones.</dd>
+      <dt>Caixa d'água</dt><dd>Seu Aurelino vê a água da rua sumir. Atrapalha: a bomba.</dd>
+      <dt>Laje</dt><dd>Tia Cotinha protege as sementes da família. Atrapalham: os Carimbadores.</dd>
+    </dl>
   </div>
-  <dl class="teclas">
-    <dt>Na rua</dt><dd>Setas ou WASD andam. E conversa com quem está perto. Clique numa porta ou janela da casa que estiver brilhando para entrar numa fase.</dd>
-    <dt>Nas fases</dt><dd>A e D andam. W ou espaço pula. O mouse aponta a mangueira e o clique solta água. Shift desvia. E fala com as pessoas e usa objetos.</dd>
-    <dt>Sempre</dt><dd>Esc abre o menu. Dentro de uma fase, Esc volta para a rua.</dd>
-  </dl>
-  <div class="itens"><button id="bComoOk">Voltar</button></div>
+
+  <div class="pg" hidden>
+    <h2>Os três marcadores</h2>
+    <div class="cols">
+      <div><h3>Água</h3><p>A caixa da rua começa com 700 litros. A mangueira de Naná tira água dessa caixa. Cada segundo de jato gasta 12 litros. O jato serve para duas coisas: desfazer os inimigos e limpar o que eles marcaram. Algumas decisões também gastam ou devolvem água. Na caixa d'água, a bomba puxa água sem parar até você soltar as mangueiras. Com a caixa em zero, o dia acaba.</p></div>
+      <div><h3>Medida</h3><p>Os inimigos marcam as coisas da casa. Coisa marcada fica branca e soma 2 à Medida. Se você limpar com água, esses 2 saem. Naná também pode ser marcada. Na terceira etiqueta, ela volta ao começo da fase e a Medida sobe 10. Algumas decisões somam ou tiram Medida de uma vez. Com a Medida em 100, a casa está perdida.</p></div>
+      <div><h3>Voz</h3><p>Conta os vizinhos que vão com você à reunião na laje, no fim do dia. Cada fase tem um vizinho. A sua decisão faz ele ir ou ficar em casa. Algumas saídas só aparecem para quem já tem gente do lado.</p></div>
+    </div>
+  </div>
+
+  <div class="pg" hidden>
+    <h2>Decisões e comandos</h2>
+    <p class="lead">Na hora de decidir, cada opção traz uma linha pequena embaixo. Ela diz o que aquela escolha custa. Depois da escolha, uma tela mostra o que mudou nos marcadores. O carimbo redondo é o recado que a Fila deixa sobre o assunto.</p>
+    <dl class="teclas">
+      <dt>Na rua</dt><dd>Setas ou WASD andam. E conversa com quem está perto. Clique numa porta ou janela que brilha para entrar numa fase.</dd>
+      <dt>Nas fases</dt><dd>A e D andam. W ou espaço pula. S desce de uma plataforma. O mouse aponta a mangueira. Segure o clique para soltar água. Shift desvia. E fala com as pessoas e usa objetos.</dd>
+      <dt>Sempre</dt><dd>Esc abre o menu. Dentro de uma fase, Esc volta para a rua. Este guia fica no menu.</dd>
+    </dl>
+  </div>
+
+  <div class="itens linha"><button id="bComoAnt" class="menor" hidden>Anterior</button><button id="bComoOk">Próxima</button></div>
 </section>
 
 <!-- menu -->

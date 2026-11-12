@@ -10,11 +10,19 @@ function atualizaPausa(){
   document.body.classList.toggle('pausado',pausa);document.body.classList.toggle('abertura',!tTitulo.hidden||(!tComo.hidden&&comoVolta===tTitulo));
 }
 atualizaPausa();
-$('bComecar').addEventListener('click',()=>{tTitulo.hidden=true;vinheta(PROLOGO);});
-function abreComo(de){comoVolta=de;de.hidden=true;tComo.hidden=false;atualizaPausa();}
+$('bComecar').addEventListener('click',()=>{tTitulo.hidden=true;vinheta(PROLOGO,()=>abreComo(null));});   // o guia abre sozinho na primeira vez
+let pgComo=0;const PGS=[...document.querySelectorAll('#tComo .pg')];
+function mostraPg(){
+  PGS.forEach((p,k)=>p.hidden=k!==pgComo);
+  $('comoN').textContent=(pgComo+1)+' de '+PGS.length;$('bComoAnt').hidden=pgComo===0;
+  $('bComoOk').textContent=pgComo===PGS.length-1?(comoVolta?'Voltar':'Começar'):'Próxima';tComo.scrollTop=0;
+}
+function abreComo(de){comoVolta=de;if(de)de.hidden=true;pgComo=0;mostraPg();tComo.hidden=false;atualizaPausa();}
+function fechaComo(){tComo.hidden=true;if(comoVolta)comoVolta.hidden=false;atualizaPausa();}
+$('bComoAnt').addEventListener('click',()=>{pgComo=Math.max(0,pgComo-1);mostraPg();});
 $('bComo').addEventListener('click',()=>abreComo(tTitulo));
 $('mComo').addEventListener('click',()=>abreComo(tMenu));
-$('bComoOk').addEventListener('click',()=>{tComo.hidden=true;if(comoVolta)comoVolta.hidden=false;atualizaPausa();});
+$('bComoOk').addEventListener('click',()=>{if(pgComo<PGS.length-1){pgComo++;mostraPg();}else fechaComo();});
 function abreMenu(){
   if(busy||telaAberta()||acabou)return;
   $('mCasa').hidden=mode==='house';
@@ -30,7 +38,7 @@ $('ol').addEventListener('click',fechaMenu);
 window.addEventListener('keydown',e=>{
   if(e.code!=='Escape'&&e.code!=='KeyM')return;
   if(!tMenu.hidden){fechaMenu();return;}
-  if(!tComo.hidden){$('bComoOk').click();return;}
+  if(!tComo.hidden){fechaComo();return;}
   if(mode==='house'&&!conversa&&!telaAberta())abreMenu();
 });
 
@@ -118,14 +126,19 @@ const COROS=[
 ];
 
 /* carimbo que aparece quando algo é medido em cada fase */
-const SELOS=['BEM DOMÉSTICO INCLUÍDO NO CADASTRO','MÓVEL CONVERTIDO EM GARANTIA DE CRÉDITO','ITEM DO QUINTAL INCORPORADO À LINHA',
-  'OBSTÁCULO RESIDENCIAL NIVELADO',null,'VARIEDADE REGISTRADA · USO SUJEITO A LICENÇA'];
+const SELOS=[
+  ['MEDIDO','Mais uma coisa da garagem entrou na Fila. Ela agradece.'],
+  ['MEDIDO','Este móvel agora garante uma dívida. Pode continuar sentando.'],
+  ['MEDIDO','O quintal foi aproveitado. A Fila reparou que ninguém estava usando.'],
+  ['MEDIDA','A casa estava no caminho da escada. A Fila pediu desculpas à escada.'],
+  null,
+  ['REGISTRADO','O feijão ganhou dono novo. A senhora pode pedir licença para plantar.']];
 
 /* depois de cada escolha: a versão oficial, o que aconteceu de fato e o que mudou nos marcadores */
 let resFn=null;
 function resultado(texto,selo,antes,fn){
   if(!texto){fn&&fn();return;}
-  $('resSelo').textContent=selo||'';$('resSelo').hidden=!selo;$('resT').textContent=texto;
+  $('resSelo').innerHTML=selo?seloHTML(selo):'';$('resSelo').hidden=!selo;$('resT').textContent=texto;
   const d=[];
   if(antes){
     const a=Math.round(G.agua-antes.agua),m=Math.round(G.medida-antes.medida);
